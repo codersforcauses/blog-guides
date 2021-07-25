@@ -2,22 +2,45 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  @apply font-mono font-bold;
+@layer base {
+  ::selection {
+    text-shadow: none;
+    @apply bg-accent text-primary;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: inherit;
+    @apply font-mono font-bold;
+  }
 }
 
-a {
-  color: #01f1cc;
+* {
+  box-sizing: border-box;
+  transition: background 0.3s, border 0.3s;
 }
 
-button:focus,
-a:focus {
-  outline-color: #01f1cc;
-  outline-offset: 1px;
+html {
+  height: 100%;
+  touch-action: manipulation;
+  font-feature-settings: 'case' 1, 'rlig' 1, 'calt' 0;
+}
+
+html,
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  line-height: 1.5em;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
+.main-content {
+  min-height: calc(100vh - 64px - 72px);
 }

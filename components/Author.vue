@@ -1,33 +1,35 @@
 <template>
-  <div class="w-full xs:mb-6 md:mb-12 article-card">
-    <NuxtLink
+  <div class="w-full mb-6 md:mb-12">
+    <nuxt-link
       :to="`/author/${author.name}`"
-      class="flex flex-col dark:bg-black-dark"
+      class="flex flex-col bg-alt-light dark:bg-primary"
     >
       <img
         v-if="author.img"
         loading="lazy"
-        class="h-48 w-full object-cover"
+        class="object-cover w-full h-48"
         :src="author.img"
         :alt="`${author.name}'s photo`"
       />
-      <div class="flex flex-col m-4">
-        <h4 class="font-semibold">Author</h4>
-
+      <div class="flex flex-col p-3">
+        <h4 class="text-sm font-semibold">Author</h4>
         <p>{{ author.name }}</p>
-        <p>{{ author.bio }}</p>
+        <p class="text-sm">{{ author.bio }}</p>
       </div>
-    </NuxtLink>
+    </nuxt-link>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue, { PropType } from 'vue'
+import { AuthorProps } from '@/types/global'
+
+export default Vue.extend({
   props: {
     author: {
-      type: Object,
+      type: Object as PropType<AuthorProps>,
       required: true
     }
   }
-}
+})
 </script>
