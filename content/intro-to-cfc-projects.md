@@ -28,7 +28,7 @@ Below we will discuss everything to do with a Coders for Causes project but in t
 - [Node](https://nodejs.org/en/) Used for building web applications
 - [VSCode](https://code.visualstudio.com/) Code editor - you will have to install extensions
 
-If you want a closer look at the tools refer to this https://blog.codersforcauses.org/my-frontend-software-tools/
+If you want a closer look at the tools refer to this https://guides.codersforcauses.org/blog/my-frontend-software-tools/
 
 Check you installed the tools correctly
 
@@ -148,4 +148,4 @@ I hope you all have fun doing the project. Software is hard so don't feel bad if
 Cheers,<br>
 David :)
 
-<nuxt-image file="roadmap.png" alt="frontend roadmap" />
+![frontend roadmap](/content/roadmap.png)

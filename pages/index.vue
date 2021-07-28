@@ -6,15 +6,23 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, useContext, useAsync } from '@nuxtjs/composition-api'
+import { BlogProps } from '@/types/global';
 
-export default Vue.extend({
-  async asyncData({ $content, params }) {
-    const articles = await $content(params.slug)
-      .only(['title', 'description', 'img', 'alt', 'slug', 'tags', 'author'])
-      .sortBy('updatedAt', 'desc')
-      .fetch()
-    return { articles }
-  },
+export default defineComponent({
+  setup () {
+    const { $content } = useContext()
+
+    const articles = useAsync(async () => (
+      await $content()
+        .only(['title', 'description', 'img', 'alt', 'slug', 'tags', 'author'])
+        .sortBy('updatedAt', 'desc')
+        .fetch<BlogProps>()
+    ))
+
+    return {
+      articles
+    }
+  }
 })
 </script>

@@ -42,34 +42,34 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { IContentDocument } from '@nuxt/content/types/content'
+import { defineComponent, computed, useContext, useStatic } from '@nuxtjs/composition-api'
+import { BlogProps } from '@/types/global';
 
-interface DataProps {
-  articles: Array<IContentDocument>
-}
+export default defineComponent({
+  setup () {
+    const { $content, params } = useContext()
+    const slug = computed(() => params.value.slug);
 
-export default Vue.extend({
-  async asyncData({ $content, params }): Promise<DataProps> {
-    const articles = await $content(params.slug)
-      .where({
-        'author.name': {
-          $regex: [params.author, 'i']
-        }
-      })
-      .without('body')
-      .sortBy('createdAt', 'asc')
-      .fetch() as Array<IContentDocument>
+    const articles = useStatic(async slug => {
+      const res = await $content()
+        .where({
+          'author.name': {
+            $regex: [slug, 'i']
+          }
+        })
+        .without(['body', 'toc', 'dir', 'updatedAt', 'createdAt'])
+        .sortBy('createdAt', 'asc')
+        .fetch<BlogProps>()
+
+      return res
+    }, slug, 'articles')
+
+    const names = Array.isArray(articles) && articles[0].author.name.split(' ') || ['Anonymous']
+    const initials = computed<string>(() => names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0))
+
     return {
-      articles
-    }
-  },
-  computed: {
-    initials() {
-      const names = this.articles[0].author.name.split(' ')
-      return names.length > 2
-        ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`
-        : names[0].charAt(0)
+      articles,
+      initials
     }
   }
 })

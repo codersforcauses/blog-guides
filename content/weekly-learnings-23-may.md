@@ -45,7 +45,13 @@ yarn add pretty-quick husky --dev
 Add this to your package.json
 
 ```json[package.json]
-{ "husky": { "hooks": { "pre-commit": "pretty-quick --staged" } } }
+{
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
 ```
 
 Now prettier will format only changed files when you `git-commit`

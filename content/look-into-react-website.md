@@ -39,10 +39,12 @@ Let's dig to each point to understand the why 🕳
 ### Separation of code and content
 
 Gatsby encourages this through its graphql api thats generated from different data sources. You specify these sources it can be from a website like [contentful](https://www.contentful.com/), an api like twitter or most commonly from your file system. In this case the Facebook team has created a folder aptly name `content` which holds most of the websites content for example the documentation.
-<nuxt-image file="docs-content.png" alt="documentation files" />
+
+![documentation files](/content/docs-content.png)
 
 Additionally they do it for other things like links too e.g. `nav.yml`
-<nuxt-image file="nav-yaml.png" alt="nav yaml file picture" />
+
+![nav yaml file picture](/content/nav-yaml.png)
 
 and a bunch of other stuff like people's names, versions and languages basically content that is likely to change. The intention of doing this separation is to make code easier to read with fewer lines to parse, better maintainability since files are easier to find and you can easily differentiate from a low risk content change and a high risk code change.
 
@@ -53,7 +55,8 @@ For a more detailed look at this concept, check out G2i's article on [Separation
 UI libraries have always been a cause of pain and joy. On the one hand they provide a lot of useful well tested components that you can drop into your app and it works. But if there is even a hint of a need for customization shit starts to get real. Their massive API surface is the only bridge to the jungle of layers of abstractions.
 
 In this case the Facebook team has chosen to write their own mini UI library which I think they have done really well. Under the `components` folder there is a collection of simple general ui components.
-<nuxt-image file="ui-component-list.png" alt="list of ui components" />
+
+![list of ui components](/content/ui-component-list.png)
 
 They don't include any app specific logic and instead use composition (using `children` prop) to add that kind of stuff which is provided by another component which reads the content from either a `.yml` file or from the GraphQL API (so much encapsulation :O) so it ends up something like this
 

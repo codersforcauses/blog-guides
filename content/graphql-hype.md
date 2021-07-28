@@ -13,7 +13,9 @@ author:
 ---
 
 Facebook initially developed GraphQL for internal consumption in 2012/2013 before publicly releasing it in 2015 and subsequently moved it to a foundation hosted by the non-profit Linux Foundation. Since then it has gained a lot of developer attention and many influential companies and people have used it in production.
-<nuxt-image file="graphql-companies.png" alt="Companies that use GraphQL" />
+
+![Companies that use GraphQL](/content/graphql-companies.png)
+
 The question is should you as a developer use it? As with most new technologies the answer is probably not. If you have read my previous articles there is a common theme about new things. **If it doesn't solve a major problem for you then you should not use it in your next project.** That doesn't mean you shouldn't use it at all but rather if you have a professional project where people depend on you its always best to stick with what you are familiar with. Why? The answer is obvious, you will likely encounter many bugs, challenges, quirks once you start developing a real app. This will decrease your productivity and quality of your software. The end user isn't going to care about what fancy technology you are using, what they do care about is whether your software solves their business problem.
 
 So with that caveat out of the way lets take a look at GraphQL.
@@ -45,7 +47,7 @@ type Post {
 
 We use a similar syntax to retrieve the exact data we want
 
-```gql
+```graphql
 {
   allPersons {
     name
@@ -57,15 +59,15 @@ Returns data in the following structure
 
 ```json
 "data": {
-    "allPersons": [
-        {
-            "name": value1
-        },
-        {
-            "name" value2
-        },
-        ...
-    ]
+  "allPersons": [
+    {
+      "name": value1
+    },
+    {
+      "name" value2
+    },
+    ...
+  ]
 }
 ```
 
@@ -84,16 +86,16 @@ Example response
 
 ```json
 "data": {
-    "allPersons": [
-        {
-            "name": value1,
-            "age": value2
-        },
-        {
-            "name": value3,
-            "age": value4
-        }
-    ]
+  "allPersons": [
+    {
+      "name": value1,
+      "age": value2
+    },
+    {
+      "name": value3,
+      "age": value4
+    }
+  ]
 }
 ```
 
@@ -103,10 +105,10 @@ In rest we have the idea of CRUD operations where every resource normally has CR
 
 ```graphql
 mutation {
-    createPerson(name: 'Bob', age: 10) {
-        name
-        age
-    }
+  createPerson(name: 'Bob', age: 10) {
+    name
+    age
+  }
 }
 ```
 
@@ -114,12 +116,12 @@ returns
 
 ```json
 {
-    "data": {
-        "createPerson": {
-            "name": "Bob",
-            "age": 10
-        }
+  "data": {
+    "createPerson": {
+      "name": "Bob",
+      "age": 10
     }
+  }
 }
 ```
 
@@ -135,12 +137,12 @@ When we send a query like this
 
 ```graphql
 {
-    author(id: 'abc') {
-        posts {
-            title
-            content
-        }
+  author(id: 'abc') {
+    posts {
+      title
+      content
     }
+  }
 }
 ```
 
@@ -148,12 +150,12 @@ we can imagine that each field i.e. `author`, `name`, `age` has a datatype assoc
 
 ```graphql
 {
-    author(id: 'abc'): Author {
-        posts: [Post] {
-            title: String
-            content: String
-        }
+  author(id: 'abc'): Author {
+    posts: [Post] {
+      title: String
+      content: String
     }
+  }
 }
 ```
 
@@ -177,7 +179,7 @@ GraphQL reminds me of Express in the sense where it is an unopinionated framewor
 
 Having said all that there are reliable services that build upon GraphQL that remove a lot of the boilerplate for us. I think these services are probably more suitable for the majority of developers. https://hasura.io/ & https://www.prisma.io/ & https://tipe.io/ (If ever it is going to be released)
 
-- **Security** - Now this isn't something inherent in GraphQL but this is a concern this you get a lot of power and flexibility. This follows on from GraphQL being too low level. You require an in depth knowledge in GraphQL to start building production applications. For example a common problem is that a cyclic query is executed by the client. This will take up a lot of resources and potentially take down your server. Due to the incredible flexibility GraphQL provides to clients this opens up interesting attack vectors. Rate limiting is also different because we no longer use multiple HTTP calls anymore. Here is a real world example of how they deal with rate limiting in GraphQ context https://developer.github.com/v4/guides/resource-limitations/
+- **Security** - Now this isn't something inherent in GraphQL but this is a concern this you get a lot of power and flexibility. This follows on from GraphQL being too low level. You require an in depth knowledge in GraphQL to start building production applications. For example a common problem is that a cyclic query is executed by the client. This will take up a lot of resources and potentially take down your server. Due to the incredible flexibility GraphQL provides to clients this opens up interesting attack vectors. Rate limiting is also different because we no longer use multiple HTTP calls anymore. Here is a real world example of how they deal with rate limiting in GraphQL context https://developer.github.com/v4/guides/resource-limitations/
 
 - **Server side caching** - It is still not as easy as REST to implement caching in the backend because we do not know what the client will request
 

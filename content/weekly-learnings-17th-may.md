@@ -25,7 +25,8 @@ cy.visit('http://google.com')
 cy.contains('google')
 ```
 
-The above code is used to see if the word `google` exists in the webpage that is loaded. This code actually works imagine how hard this would have been in other e2e testing frameworks. Firstly you have to await that shit then you would have to handle the case that the word google could have been loaded after the main page load so you have to some how handle that too. And after all that it still might not work :/.... Cypress really does live up to their claim that they are
+The above code is used to see if the word `google` exists in the webpage that is loaded. This code actually works imagine how hard this would have been in other e2e testing frameworks. Firstly you have to await that shit then you would have to handle the case that the word google could have been loaded after the main page load so you have to some how handle that too. And after all that it still might not work :/ .... Cypress really does live up to their claim that they are
+
 > fixing frontend testing because it has been broken for a long time.
 
 ## Formatting and linting

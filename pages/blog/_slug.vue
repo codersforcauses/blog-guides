@@ -1,5 +1,5 @@
 <template>
-  <article class="w-screen">
+  <article class="max-w-none">
     <div v-show="article.img" class="relative w-screen h-96">
       <img
         loading="lazy"
@@ -10,7 +10,7 @@
     </div>
     <div class="container relative gap-16 px-3 py-8 mx-auto blog-grid lg:gap-24">
       <div>
-        <h1 class="mb-4 text-4xl md:text-5xl">
+        <h1 class="mb-4 text-3xl sm:text-4xl md:text-5xl">
           {{ article.title }}
         </h1>
         <span class="md:hidden">
@@ -26,7 +26,7 @@
         </span>
         <!-- content from markdown -->
         <nuxt-content :document="article" />
-        <div class="flex justify-between">
+        <div class="flex justify-between mt-4">
           <nuxt-link
             v-if="prev"
             :to="{ name: 'blog-slug', params: { slug: prev.slug } }"
@@ -82,81 +82,91 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { IContentDocument } from '@nuxt/content/types/content'
+import { defineComponent, computed, useContext, useStatic, useMeta } from '@nuxtjs/composition-api'
+import { BlogProps, ContentProps } from '@/types/global';
 
-type DataProps = Record<'article' | 'prev' | 'next', IContentDocument | null>
+export default defineComponent({
+  setup () {
+    const { $content, params } = useContext()
+    const slug = computed(() => params.value.slug)
 
-export default Vue.extend({
-  async asyncData({ $content, params }): Promise<DataProps> {
-    const article = await $content(params.slug).fetch() as IContentDocument
-    const [prev, next] = await $content()
-      .only(['title', 'slug'])
-      .sortBy('createdAt', 'asc')
-      .surround(params.slug)
-      .fetch() as Array<IContentDocument | null>
-    return {
-      article,
-      prev,
-      next
-    }
-  },
-  head() {
-    return {
-      title: `${this.article.title} | Coders for Causes`,
-      meta: [
+    const { title, meta } = useMeta()
+
+    const article = useStatic(async slug => {
+      const article = await $content(slug)
+        .fetch<BlogProps>() as ContentProps
+
+      title.value = `${article.title} | Coders for Causes`
+      meta.value = [
         {
           hid: 'description',
           name: 'description',
-          content: this.article.description
+          content: article.description
         },
         {
           hid: 'twitter:title',
           name: 'twitter:title',
-          content: `${this.article.title} | Coders for Causes`
+          content: `${article.title} | Coders for Causes`
         },
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: this.article.description
+          content: article.description
         },
         {
           hid: 'twitter:image',
           name: 'twitter:image',
           content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
-            this.article.slug.split('-').join('_')
+            article.slug.split('-').join('_')
           )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
         },
         {
           hid: 'twitter:url',
           name: 'twitter:url',
-          content: `https://guides.codersforcauses.org/blog/${this.article.slug}`
+          content: `https://guides.codersforcauses.org/blog/${article.slug}`
         },
         {
           hid: 'og:title',
           property: 'og:title',
-          content: `${this.article.title} | Coders for Causes`
+          content: `${article.title} | Coders for Causes`
         },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.article.description
+          content: article.description
         },
         {
           hid: 'og:image',
           property: 'og:image',
           content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
-            this.article.slug.split('-').join('_')
+            article.slug.split('-').join('_')
           )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
         },
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `https://guides.codersforcauses.org/blog/${this.article.slug}`
+          content: `https://guides.codersforcauses.org/blog/${article.slug}`
         }
       ]
+
+      return article
+    }, slug, 'article')
+
+    const pagination = useStatic(async slug => (
+      await $content()
+        .only(['title', 'slug'])
+        .sortBy('updatedAt', 'asc')
+        .surround(slug)
+        .fetch<BlogProps>() as Array<Partial<BlogProps> | null>
+    ), slug, 'pagination')
+
+    return {
+      article,
+      prev: pagination.value?.[0],
+      next: pagination.value?.[1]
     }
   },
+  head: {},
   methods: {
     formatDate(date: string): string {
       return new Date(date).toLocaleDateString('en-AU', {
@@ -184,55 +194,48 @@ export default Vue.extend({
   list-style-type: square;
 }
 
-/* .nuxt-content-highlight {
+.nuxt-content  {
+  @apply space-y-3;
+}
+.nuxt-content-highlight {
   @apply relative;
 }
 .nuxt-content-highlight .filename {
-  @apply absolute right-0 text-primary font-light z-10 mr-2 mt-1 text-sm;
+  @apply absolute right-0 text-secondary font-light z-10 mr-1.5 mt-0.5 text-sm;
 }
 .nuxt-content-highlight pre {
-  border-radius: 0 !important;
-}
-.nuxt-content > * {
-  @apply mb-4;
-}
-.nuxt-content h1,
-.nuxt-content h2,
-.nuxt-content h3,
-.nuxt-content h4,
-.nuxt-content h5,
-.nuxt-content h6 {
-  @apply font-mono font-bold;
+  max-width: calc(100vw - 1.5rem);
+  @apply rounded-none p-3 pt-4 text-sm overflow-x-auto;
 }
 .nuxt-content h2 {
-  font-size: 28px;
+  @apply text-2xl md:text-3xl;
 }
 .nuxt-content h3 {
-  font-size: 22px;
+  @apply text-lg md:text-xl;
 }
-.nuxt-content p {
-  @apply mb-4;
-}
-.nuxt-content code {
-  @apply font-semibold;
+.nuxt-content p > code, .nuxt-content li > code {
+  @apply font-bold px-2 text-sm bg-alt-dark bg-opacity-20 dark:bg-alt-light dark:bg-opacity-20;
 }
 .nuxt-content blockquote {
-  @apply pl-4 py-2 border-l-4 border-primary;
+  @apply italic pl-4 py-2 border-l-4 border-alt-dark border-opacity-75 dark:border-alt-light dark:border-opacity-75;
 }
-.nuxt-content blockquote p {
-  @apply italic m-0;
-}
-.nuxt-content a:hover {
-  text-decoration: underline;
+.nuxt-content a {
+  @apply text-alt-dark hover:underline dark:text-alt-light;
 }
 .nuxt-content ol {
   @apply list-inside list-decimal;
 }
 .nuxt-content ul {
   list-style-type: square;
-  @apply list-inside;
+  @apply list-inside space-y-2;
+}
+.nuxt-content li > ul, .nuxt-content li > ol {
+  @apply ml-6;
+}
+.nuxt-content li > p {
+  @apply inline;
 }
 .nuxt-content-editor {
-  @apply bg-primary dark:bg-secondary;
-} */
+  @apply bg-primary bg-opacity-50 text-secondary;
+}
 </style>

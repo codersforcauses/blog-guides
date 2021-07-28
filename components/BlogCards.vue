@@ -64,17 +64,17 @@
 </template>
 
 <script lang="ts">
-  import Vue, { PropType } from 'vue'
-  import { IContentDocument } from '@nuxt/content/types/content'
+import { defineComponent } from '@vue/composition-api'
+import { ContentProps } from '@/types/global'
 
-  export default Vue.extend({
-    props: {
-      articles: {
-        type: Array as PropType<Array<IContentDocument | null>>,
-        default: null
-      }
+export default defineComponent({
+  props: {
+    articles: {
+      type: Array as () => Array<ContentProps>,
+      default: null
     }
-  })
+  }
+})
 </script>
 
 <style scoped>

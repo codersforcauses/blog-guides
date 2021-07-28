@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mb-6 md:mb-12">
+  <div class="w-2/5 mb-6 lg:w-full lg:mb-12">
     <nuxt-link
       :to="`/author/${author.name}`"
       class="flex flex-col bg-alt-light dark:bg-primary"
@@ -21,13 +21,13 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue'
+import { defineComponent } from '@vue/composition-api'
 import { AuthorProps } from '@/types/global'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     author: {
-      type: Object as PropType<AuthorProps>,
+      type: Object as () => AuthorProps,
       required: true
     }
   }

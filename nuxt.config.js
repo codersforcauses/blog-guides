@@ -89,15 +89,19 @@ export default {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
+    '@nuxtjs/composition-api/module',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
     '@nuxtjs/google-fonts'
   ],
-  modules: [
-    '@nuxt/content'
-  ],
+  modules: ['@nuxt/content'],
+  generate: {
+    // choose to suit your project
+    interval: 2000
+  },
   content: {
     markdown: {
+      remarkPlugins: [['remark-emoji', { emoticon: true }]],
       prism: {
         theme: 'prism-themes/themes/prism-a11y-dark.css'
       }

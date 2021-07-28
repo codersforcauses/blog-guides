@@ -22,28 +22,28 @@ Say you have a function `addReply`
 
 ```php
 /**
-    * Add a reply to a thread
-    *
-    * @param array $reply
-    * @return Model
-    */
-   public function addReply($reply)
-   {
-       return $this->replies()->create($reply);
-   }
+  * Add a reply to a thread
+  *
+  * @param array $reply
+  * @return Model
+*/
+public function addReply($reply)
+{
+  return $this->replies()->create($reply);
+}
 ```
 
 Its main job is to just add a reply to the database. But what happens if you want to do something more say send an email when a reply is added or if you want to update the replies count? Sure you could add it to the code below
 
 ```php
- public function addReply($reply)
-    {
-        return $this->replies()->create($reply);
+public function addReply($reply)
+{
+  return $this->replies()->create($reply);
 
-        Mail::to(auth()->user()->email)->send(new AddReplyEmail);
+  Mail::to(auth()->user()->email)->send(new AddReplyEmail);
 
-        auth()->user()->thread->updateRepliesCount($reply);
-    }
+  auth()->user()->thread->updateRepliesCount($reply);
+}
 ```
 
 But this quickly gets messy doesn't it. The addReply function could quickly end up doing much more than just adding a reply.
@@ -52,22 +52,22 @@ Introducing `events`
 
 ```php
 public function addReply($reply)
-    {
-        $reply = $this->replies()->create($reply);
+{
+  $reply = $this->replies()->create($reply);
 
-        event(new ThreadHasNewReply($this, $reply));
+  event(new ThreadHasNewReply($this, $reply));
 
-        return $reply;
-    }
+  return $reply;
+}
 ```
 
 And in `App\Providers\EventServiceProvider` add this to the `listen` array
 
 ```php
 'App\Events\ThreadHasNewReply' => [
-            'App\Listeners\NotifyThreadSubscribers',
-            'App\Listeners\UpdateThreadRepliesCount'
-        ]
+  'App\Listeners\NotifyThreadSubscribers',
+  'App\Listeners\UpdateThreadRepliesCount'
+]
 ```
 
 Then generate the files with `php artisan event:generate`
