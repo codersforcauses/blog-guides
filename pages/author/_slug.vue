@@ -128,6 +128,7 @@ export default defineComponent({
       articles,
       initials
     }
-  }
+  },
+  head: {}
 })
 </script>
