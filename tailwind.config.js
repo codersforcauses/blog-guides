@@ -28,7 +28,10 @@ module.exports = {
     extend: {}
   },
   variants: {
-    extend: {}
+    extend: {
+      width: ['focus-within'],
+      left: ['focus-within']
+    }
   },
   plugins: []
 }

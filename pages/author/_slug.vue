@@ -44,13 +44,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, useContext, useStatic } from '@nuxtjs/composition-api'
-import { BlogProps } from '@/types/global';
+import { defineComponent, computed, useContext, useStatic, useMeta } from '@nuxtjs/composition-api'
+import { BlogProps, ContentProps } from '@/types/global';
 
 export default defineComponent({
   setup () {
     const { $content, params } = useContext()
     const slug = computed(() => decodeURIComponent(params.value.slug))
+
+    const { title, meta } = useMeta()
 
     const articles = useStatic(async slug => {
       const res = await $content()
@@ -61,7 +63,62 @@ export default defineComponent({
         })
         .without(['body', 'toc', 'dir', 'updatedAt', 'createdAt'])
         .sortBy('createdAt', 'asc')
-        .fetch<BlogProps>()
+        .fetch<BlogProps>() as Array<ContentProps>
+
+      const { author } = res[0]
+
+      title.value = `${author.name} | Coders for Causes`
+      meta.value = [
+        {
+          hid: 'description',
+          name: 'description',
+          content: author.bio
+        },
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title',
+          content: `${author.name} | Coders for Causes`
+        },
+        {
+          hid: 'twitter:description',
+          name: 'twitter:description',
+          content: author.bio
+        },
+        {
+          hid: 'twitter:image',
+          name: 'twitter:image',
+          content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
+            author.name.split('-').join('_')
+          )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
+        },
+        {
+          hid: 'twitter:url',
+          name: 'twitter:url',
+          content: `https://guides.codersforcauses.org/blog/${author.name}`
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: `${author.name} | Coders for Causes`
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: author.bio
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
+            author.name.split('-').join('_')
+          )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `https://guides.codersforcauses.org/blog/${author.name}`
+        }
+      ]
 
       return res
     }, slug, 'articles')
@@ -73,6 +130,7 @@ export default defineComponent({
       articles,
       initials
     }
-  }
+  },
+  head: {}
 })
 </script>

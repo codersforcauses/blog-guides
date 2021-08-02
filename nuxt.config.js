@@ -1,34 +1,12 @@
 export default {
   target: 'static',
   head: {
-    title: 'Guides | Coders for Causes',
     htmlAttrs: {
       lang: 'en-AU'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Guides by the Coders for Causes committee for coders.'
-      },
-      {
-        hid: 'twitter:title',
-        name: 'twitter:title',
-        content: 'Guides | Coders for Causes'
-      },
-      {
-        hid: 'twitter:description',
-        name: 'twitter:description',
-        content: 'Guides by the Coders for Causes committee for coders.'
-      },
-      {
-        hid: 'twitter:image',
-        name: 'twitter:image',
-        content:
-          'https://og-social-cards.vercel.app/**.%2Fguides**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg'
-      },
       {
         name: 'twitter:card',
         content: 'summary_large_image'
@@ -38,34 +16,8 @@ export default {
         content: '@codersforcauses'
       },
       {
-        hid: 'twitter:url',
-        name: 'twitter:url',
-        content: 'https://guides.codersforcauses.org/'
-      },
-      {
-        hid: 'og:title',
-        property: 'og:title',
-        content: 'Guides | Coders for Causes'
-      },
-      {
-        hid: 'og:description',
-        property: 'og:description',
-        content: 'Guides by the Coders for Causes committee for coders.'
-      },
-      {
-        hid: 'og:image',
-        property: 'og:image',
-        content:
-          'https://og-social-cards.vercel.app/**.%2Fguides**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg'
-      },
-      {
         property: 'og:type',
         content: 'website'
-      },
-      {
-        hid: 'og:url',
-        property: 'og:url',
-        content: 'https://guides.codersforcauses.org/'
       },
       {
         property: 'og:image:width',
@@ -96,8 +48,8 @@ export default {
   ],
   modules: ['@nuxt/content'],
   generate: {
-    // choose to suit your project
-    interval: 2000
+    // choose to suit project
+    interval: 3000
   },
   content: {
     markdown: {
@@ -108,7 +60,9 @@ export default {
     },
     nestedProperties: ['author.name']
   },
-  build: {},
+  build: {
+    optimizeCSS: true
+  },
   colorMode: {
     classSuffix: ''
   },

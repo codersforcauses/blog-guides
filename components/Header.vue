@@ -13,7 +13,7 @@
       <div class="flex items-center justify-between w-24 h-full sm:w-72">
         <button
           :title="`Switch to ${toggleHeading} mode`"
-          class="relative flex items-center justify-center h-10 p-1.5 w-10 focus:outline-none focus:ring focus:ring-inset focus:ring-accent"
+          class="mr-4 relative flex items-center justify-center h-10 p-1.5 w-10 focus:outline-none focus:ring focus:ring-inset focus:ring-accent"
           @click="$colorMode.preference = toggleHeading"
         >
           <transition name="fade">
