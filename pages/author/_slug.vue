@@ -2,13 +2,13 @@
   <main>
     <div class="border-b bg-primary border-secondary">
       <div class="container px-3 pt-5 pb-24 mx-auto md:pb-32">
-        <NuxtLink
+        <nuxt-link
           to="/"
           class="flex items-center px-1 py-2 -ml-2 space-x-1 border border-transparent w-max text-secondary hover:border-secondary hover:bg-secondary hover:text-primary"
         >
           <span class="material-icons-sharp">arrow_back</span>
           <span class="font-bold"> Back to All Articles </span>
-        </NuxtLink>
+        </nuxt-link>
       </div>
     </div>
     <template v-if="articles">
