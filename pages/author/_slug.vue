@@ -11,33 +11,35 @@
         </NuxtLink>
       </div>
     </div>
-    <div class="container flex items-center px-3 mx-auto">
-      <div
-        class="flex items-center justify-center w-32 h-32 -mt-16 font-mono border border-secondary bg-primary text-7xl text-secondary md:w-40 md:h-40 md:-mt-20"
-      >
-        <img
-          v-if="articles[0].author.img"
-          loading="lazy"
-          :src="articles[0].author.img"
-          :alt="articles[0].author.name"
-          class="object-cover w-full h-full"
-        />
-        <span v-else class="uppercase">{{ initials }}</span>
+    <template v-if="articles">
+      <div class="container flex items-center px-3 mx-auto">
+        <div
+          class="flex items-center justify-center w-32 h-32 -mt-16 font-mono border border-secondary bg-primary text-7xl text-secondary md:w-40 md:h-40 md:-mt-20"
+        >
+          <img
+            v-if="articles[0].author.img"
+            loading="lazy"
+            :src="articles[0].author.img"
+            :alt="articles[0].author.name"
+            class="object-cover w-full h-full"
+          />
+          <span v-else class="uppercase">{{ initials }}</span>
+        </div>
+        <div class="ml-4">
+          {{ articles[0].author.name }}
+        </div>
       </div>
-      <div class="ml-4">
-        {{ articles[0].author.name }}
-      </div>
-    </div>
-    <p class="container px-3 mx-auto mt-4">
-      {{ articles[0].author.bio }}
-    </p>
+      <p class="container px-3 mx-auto mt-4">
+        {{ articles[0].author.bio }}
+      </p>
 
-    <div class="container px-3 mx-auto mt-8 mb-8 md:mt-16">
-      <h1 class="mb-4 text-2xl font-bold">
-        Articles by {{ articles[0].author.name }}:
-      </h1>
-      <blog-cards :articles="articles" />
-    </div>
+      <div class="container px-3 mx-auto mt-8 mb-8 md:mt-16">
+        <h1 class="mb-4 text-2xl font-bold">
+          Articles by {{ articles[0].author.name }}:
+        </h1>
+        <blog-cards :articles="articles" />
+      </div>
+    </template>
   </main>
 </template>
 
@@ -48,7 +50,7 @@ import { BlogProps } from '@/types/global';
 export default defineComponent({
   setup () {
     const { $content, params } = useContext()
-    const slug = computed(() => params.value.slug);
+    const slug = computed(() => decodeURIComponent(params.value.slug))
 
     const articles = useStatic(async slug => {
       const res = await $content()

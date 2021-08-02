@@ -1,7 +1,7 @@
 <template>
   <div class="w-2/5 mb-6 lg:w-full lg:mb-12">
     <nuxt-link
-      :to="`/author/${author.name}`"
+      :to="{ name: 'author-slug', params: { slug: encodeURIComponent(author.name.toLowerCase()) } }"
       class="flex flex-col bg-alt-light dark:bg-primary"
     >
       <img
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { AuthorProps } from '@/types/global'
 
 export default defineComponent({

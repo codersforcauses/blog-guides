@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, useContext, useAsync } from '@nuxtjs/composition-api'
-import { BlogProps } from '@/types/global';
+import { BlogProps } from '@/types/global'
 
 export default defineComponent({
   setup () {
@@ -16,7 +16,7 @@ export default defineComponent({
     const articles = useAsync(async () => (
       await $content()
         .only(['title', 'description', 'img', 'alt', 'slug', 'tags', 'author'])
-        .sortBy('updatedAt', 'desc')
+        .sortBy('createdAt', 'desc')
         .fetch<BlogProps>()
     ))
 

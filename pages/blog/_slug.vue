@@ -1,5 +1,5 @@
 <template>
-  <article class="max-w-none">
+  <article v-if="article" class="max-w-none">
     <div v-show="article.img" class="relative w-screen h-96">
       <img
         loading="lazy"
@@ -16,9 +16,9 @@
         <span class="md:hidden">
           <p class="mb-0">
             by
-            <NuxtLink :to="`/author/${article.author.name}`">
+            <nuxt-link :to="{ name: 'author-slug', params: { slug: encodeURIComponent(article.author.name.toLowerCase()) } }">
               {{ article.author.name }}
-            </NuxtLink>
+            </nuxt-link>
           </p>
           <p class="mb-4">
             <small>Last Updated: {{ formatDate(article.updatedAt) }}</small>
@@ -93,8 +93,7 @@ export default defineComponent({
     const { title, meta } = useMeta()
 
     const article = useStatic(async slug => {
-      const article = await $content(slug)
-        .fetch<BlogProps>() as ContentProps
+      const article = await $content(slug).fetch<BlogProps>() as ContentProps
 
       title.value = `${article.title} | Coders for Causes`
       meta.value = [
@@ -155,7 +154,7 @@ export default defineComponent({
     const pagination = useStatic(async slug => (
       await $content()
         .only(['title', 'slug'])
-        .sortBy('updatedAt', 'asc')
+        .sortBy('createdAt', 'asc')
         .surround(slug)
         .fetch<BlogProps>() as Array<Partial<BlogProps> | null>
     ), slug, 'pagination')

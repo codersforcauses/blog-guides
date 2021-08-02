@@ -7,6 +7,7 @@ alt: Introduction to CFC projects
 tags:
   - introduction
   - beginner-friendly
+  - cfc
 author:
   name: David Yu
   bio: I love to code

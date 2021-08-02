@@ -1,14 +1,19 @@
 <template>
   <header
-    class="bg-primary text-secondary inset-x-0 py-3"
+    class="inset-x-0 py-3 bg-primary text-secondary"
     :class="{ 'fixed top-0': $nuxt.$route.name === 'index' }"
   >
-    <div class="container mx-auto px-3 flex items-center justify-between">
-      <nuxt-link to="/" class="font-mono text-lg font-bold">cfc</nuxt-link>
-      <div class="h-full flex items-center w-24 sm:w-72">
+    <div class="container flex items-center justify-between px-3 mx-auto">
+      <nuxt-link
+        to="/"
+        class="px-1 py-2 -my-2 -mr-3 font-mono text-xl font-black no-underline select-none text-secondary hover:bg-secondary hover:text-primary md:mr-12 focus:outline-none focus:bg-secondary focus:text-primary"
+      >
+        cfc
+      </nuxt-link>
+      <div class="flex items-center justify-between w-24 h-full sm:w-72">
         <button
           :title="`Switch to ${toggleHeading} mode`"
-          class="relative p-2 flex items-center w-12 h-10"
+          class="relative flex items-center justify-center h-10 p-1.5 w-10 focus:outline-none focus:ring focus:ring-inset focus:ring-accent"
           @click="$colorMode.preference = toggleHeading"
         >
           <transition name="fade">
@@ -28,57 +33,35 @@
             </span>
           </transition>
         </button>
-        <div class="relative w-full h-10 ml-6">
-          <!-- <autocomplete
-            auto-select
-            :search="search"
-            :get-result-value="getOptions"
-            placeholder="Search Articles"
-            aria-label="Search Articles"
-            base-class="search"
-            class="search-articles"
-            @submit="submit"
-          /> -->
-        </div>
+        <autocomplete />
       </div>
     </div>
   </header>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
-  // import Autocomplete from '@trevoreyre/autocomplete-vue'
-  import { ContentProps } from '@/types/global'
+import { defineComponent, computed, useContext, useAsync } from '@nuxtjs/composition-api'
+import { BlogProps } from '@/types/global'
 
-  export default Vue.extend({
-    // components: {
-    //   Autocomplete
-    // },
-    computed: {
-      toggleHeading(): 'dark' | 'light' {
-        return this.$colorMode.preference === 'light' ? 'dark' : 'light'
-      }
-    },
-    methods: {
-      async search(searchQuery: string) {
-        if (!searchQuery) return []
+export default defineComponent({
+  setup () {
+    const { $content, $colorMode } = useContext()
 
-        return await this.$content('articles')
-          .limit(6)
-          .search(searchQuery)
-          .fetch()
-      },
-      getOptions(result: ContentProps): string {
-        return result.title
-      },
-      submit(result: ContentProps) {
-        this.$router.push({
-          name: 'blog-slug',
-          params: { slug: result.slug }
-        })
-      }
+    const articles = useAsync(async () => (
+      await $content()
+        .only(['title', 'description', 'img', 'alt', 'slug', 'tags', 'author'])
+        .sortBy('createdAt', 'desc')
+        .fetch<BlogProps>()
+    ))
+
+    const toggleHeading = computed(() => $colorMode.preference === 'light' ? 'dark' : 'light')
+
+    return {
+      articles,
+      toggleHeading
     }
-  })
+  }
+})
 </script>
 
 <style scoped>
