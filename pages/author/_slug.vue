@@ -67,15 +67,10 @@ export default defineComponent({
     const names = Array.isArray(articles) && articles[0].author.name.split(' ') || ['Anonymous']
     const initials = computed<string>(() => names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0))
 
-    const defaultAuthor: Omit<AuthorProps, 'img'> = {
-      name: 'Coders for Causes',
-      bio: 'We are a non-profit that builds software for other charities and non-profits'
-    }
-
     return {
       articles,
       initials,
-      author: Array.isArray(articles) && (articles[0].author as AuthorProps) || defaultAuthor
+      author: Array.isArray(articles) && (articles[0].author as AuthorProps)
     }
   },
   head() {
