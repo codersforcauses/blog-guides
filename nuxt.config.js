@@ -47,10 +47,6 @@ export default {
     '@nuxtjs/google-fonts'
   ],
   modules: ['@nuxt/content'],
-  generate: {
-    // choose to suit project
-    interval: 3000
-  },
   content: {
     markdown: {
       remarkPlugins: [['remark-emoji', { emoticon: true }]],
