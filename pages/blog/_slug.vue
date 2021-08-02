@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, useContext, useStatic, useMeta } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext, useStatic } from '@nuxtjs/composition-api'
 import { BlogProps, ContentProps } from '@/types/global';
 
 export default defineComponent({
@@ -90,13 +90,29 @@ export default defineComponent({
     const { $content, params } = useContext()
     const slug = computed(() => params.value.slug)
 
-    const { title, meta } = useMeta()
+    const article = useStatic(async slug => (
+      await $content(slug).fetch<BlogProps>()
+    ), slug, 'article')
 
-    const article = useStatic(async slug => {
-      const article = await $content(slug).fetch<BlogProps>() as ContentProps
+    const pagination = useStatic(async slug => (
+      await $content()
+        .only(['title', 'slug'])
+        .sortBy('createdAt', 'asc')
+        .surround(slug)
+        .fetch<BlogProps>() as Array<Partial<BlogProps> | null>
+    ), slug, 'pagination')
 
-      title.value = `${article.title} | Coders for Causes`
-      meta.value = [
+    return {
+      article,
+      prev: pagination.value?.[0],
+      next: pagination.value?.[1]
+    }
+  },
+  head() {
+    const article = this.article as ContentProps
+    return {
+      title: `${article.title} | Coders for Causes`,
+      meta: [
         {
           hid: 'description',
           name: 'description',
@@ -147,25 +163,8 @@ export default defineComponent({
           content: `https://guides.codersforcauses.org/blog/${article.slug}`
         }
       ]
-
-      return article
-    }, slug, 'article')
-
-    const pagination = useStatic(async slug => (
-      await $content()
-        .only(['title', 'slug'])
-        .sortBy('createdAt', 'asc')
-        .surround(slug)
-        .fetch<BlogProps>() as Array<Partial<BlogProps> | null>
-    ), slug, 'pagination')
-
-    return {
-      article,
-      prev: pagination.value?.[0],
-      next: pagination.value?.[1]
     }
   },
-  head: {},
   methods: {
     formatDate(date: string): string {
       return new Date(date).toLocaleDateString('en-AU', {

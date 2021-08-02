@@ -17,25 +17,25 @@
           class="flex items-center justify-center w-32 h-32 -mt-16 font-mono border border-secondary bg-primary text-7xl text-secondary md:w-40 md:h-40 md:-mt-20"
         >
           <img
-            v-if="articles[0].author.img"
+            v-if="author.img"
             loading="lazy"
-            :src="articles[0].author.img"
-            :alt="articles[0].author.name"
+            :src="author.img"
+            :alt="author.name"
             class="object-cover w-full h-full"
           />
           <span v-else class="uppercase">{{ initials }}</span>
         </div>
         <div class="ml-4">
-          {{ articles[0].author.name }}
+          {{ author.name }}
         </div>
       </div>
       <p class="container px-3 mx-auto mt-4">
-        {{ articles[0].author.bio }}
+        {{ author.bio }}
       </p>
 
       <div class="container px-3 mx-auto mt-8 mb-8 md:mt-16">
         <h1 class="mb-4 text-2xl font-bold">
-          Articles by {{ articles[0].author.name }}:
+          Articles by {{ author.name }}:
         </h1>
         <blog-cards :articles="articles" />
       </div>
@@ -44,18 +44,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, useContext, useStatic, useMeta } from '@nuxtjs/composition-api'
-import { BlogProps, ContentProps } from '@/types/global';
+import { defineComponent, computed, useContext, useStatic } from '@nuxtjs/composition-api'
+import { AuthorProps, BlogProps } from '@/types/global';
 
 export default defineComponent({
   setup () {
     const { $content, params } = useContext()
     const slug = computed(() => decodeURIComponent(params.value.slug))
 
-    const { title, meta } = useMeta()
-
-    const articles = useStatic(async slug => {
-      const res = await $content()
+    const articles = useStatic(async slug => (
+      await $content()
         .where({
           'author.name': {
             $regex: [slug, 'i']
@@ -63,12 +61,28 @@ export default defineComponent({
         })
         .without(['body', 'toc', 'dir', 'updatedAt', 'createdAt'])
         .sortBy('createdAt', 'asc')
-        .fetch<BlogProps>() as Array<ContentProps>
+        .fetch<BlogProps>()
+    ), slug, 'articles')
 
-      const { author } = res[0]
+    const names = Array.isArray(articles) && articles[0].author.name.split(' ') || ['Anonymous']
+    const initials = computed<string>(() => names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0))
 
-      title.value = `${author.name} | Coders for Causes`
-      meta.value = [
+    const defaultAuthor: Omit<AuthorProps, 'img'> = {
+      name: 'Coders for Causes',
+      bio: 'We are a non-profit that builds software for other charities and non-profits'
+    }
+
+    return {
+      articles,
+      initials,
+      author: Array.isArray(articles) && (articles[0].author as AuthorProps) || defaultAuthor
+    }
+  },
+  head() {
+    const author = this.author as Omit<AuthorProps, 'img'>
+    return {
+      title: `${author.name} | Coders for Causes`,
+      meta: [
         {
           hid: 'description',
           name: 'description',
@@ -119,18 +133,7 @@ export default defineComponent({
           content: `https://guides.codersforcauses.org/blog/${author.name}`
         }
       ]
-
-      return res
-    }, slug, 'articles')
-
-    const names = Array.isArray(articles) && articles[0].author.name.split(' ') || ['Anonymous']
-    const initials = computed<string>(() => names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0))
-
-    return {
-      articles,
-      initials
     }
-  },
-  head: {}
+  }
 })
 </script>
