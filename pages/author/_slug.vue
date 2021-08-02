@@ -17,25 +17,25 @@
           class="flex items-center justify-center w-32 h-32 -mt-16 font-mono border border-secondary bg-primary text-7xl text-secondary md:w-40 md:h-40 md:-mt-20"
         >
           <img
-            v-if="author.img"
+            v-if="articles[0].author.img"
             loading="lazy"
-            :src="author.img"
-            :alt="author.name"
+            :src="articles[0].author.img"
+            :alt="articles[0].author.name"
             class="object-cover w-full h-full"
           />
           <span v-else class="uppercase">{{ initials }}</span>
         </div>
         <div class="ml-4">
-          {{ author.name }}
+          {{ articles[0].author.name }}
         </div>
       </div>
       <p class="container px-3 mx-auto mt-4">
-        {{ author.bio }}
+        {{ articles[0].author.bio }}
       </p>
 
       <div class="container px-3 mx-auto mt-8 mb-8 md:mt-16">
         <h1 class="mb-4 text-2xl font-bold">
-          Articles by {{ author.name }}:
+          Articles by {{ articles[0].author.name }}:
         </h1>
         <blog-cards :articles="articles" />
       </div>
@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, useContext, useStatic } from '@nuxtjs/composition-api'
-import { AuthorProps, BlogProps } from '@/types/global';
+import { BlogProps, ContentProps } from '@/types/global';
 
 export default defineComponent({
   setup () {
@@ -69,12 +69,12 @@ export default defineComponent({
 
     return {
       articles,
-      initials,
-      author: Array.isArray(articles) && (articles[0].author as AuthorProps)
+      initials
     }
   },
   head() {
-    const author = this.author as Omit<AuthorProps, 'img'>
+    const articles = this.articles as Array<ContentProps>
+    const author = articles[0].author
     return {
       title: `${author.name} | Coders for Causes`,
       meta: [
