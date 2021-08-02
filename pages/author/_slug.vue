@@ -44,8 +44,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, useContext, useStatic } from '@nuxtjs/composition-api'
-import { BlogProps, ContentProps } from '@/types/global';
+import { defineComponent, computed, useContext, useStatic, useMeta } from '@nuxtjs/composition-api'
+import { BlogProps } from '@/types/global';
 
 export default defineComponent({
   setup () {
@@ -67,15 +67,9 @@ export default defineComponent({
     const names = Array.isArray(articles) && articles[0].author.name.split(' ') || ['Anonymous']
     const initials = computed<string>(() => names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0))
 
-    return {
-      articles,
-      initials
-    }
-  },
-  head() {
-    const articles = this.articles as Array<ContentProps>
-    const author = articles[0].author
-    return {
+    const author = Array.isArray(articles) && articles[0].author
+
+    useMeta(() => ({
       title: `${author.name} | Coders for Causes`,
       meta: [
         {
@@ -128,6 +122,11 @@ export default defineComponent({
           content: `https://guides.codersforcauses.org/blog/${author.name}`
         }
       ]
+    }))
+
+    return {
+      articles,
+      initials
     }
   }
 })
