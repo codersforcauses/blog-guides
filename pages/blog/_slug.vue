@@ -5,7 +5,7 @@
         loading="lazy"
         :src="article.img"
         :alt="article.alt"
-        class="absolute object-cover w-full h-full"
+        class="absolute z-0 object-cover w-full h-full"
       />
     </div>
     <div class="container relative gap-16 px-3 py-8 mx-auto blog-grid lg:gap-24">

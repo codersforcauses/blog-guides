@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative z-10 h-full ml-4 bg-secondary bg-opacity-80 text-primary focus-within:bg-opacity-100">
+    <div class="relative z-20 h-full ml-4 bg-secondary bg-opacity-80 text-primary focus-within:bg-opacity-100">
       <span class="absolute flex items-center h-full px-1 text-2xl material-icons-sharp text-primary">
         search
       </span>
@@ -10,6 +10,7 @@
         placeholder="Search Articles"
         autocomplete="off"
         class="w-full h-full py-2 pl-8 pr-2 bg-transparent border border-b-0 border-primary placeholder-opacity-60 placeholder-primary focus:outline-none"
+        @focus="display"
       />
       <div v-show="showOptions" class="absolute w-full border border-t-0 bg-secondary text-primary border-primary">
         <div v-if="articles.length > 0" class="flex flex-col">
@@ -29,8 +30,8 @@
       </div>
     </div>
     <button
-      v-show="query"
-      class="absolute inset-0 z-0 w-screen h-screen bg-transparent cursor-default"
+      v-show="query && showOptions"
+      class="absolute inset-0 z-10 w-screen h-screen bg-transparent cursor-default"
       @click="reset"
       @focus="reset"
     >
@@ -75,6 +76,10 @@ export default defineComponent({
     }
   },
   methods: {
+    display()  {
+      if (this.query)
+      this.showOptions = true
+    },
     reset() {
       this.showOptions = false
     }
