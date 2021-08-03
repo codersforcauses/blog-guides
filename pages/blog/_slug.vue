@@ -81,92 +81,81 @@
   </article>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, useContext, useStatic } from '@nuxtjs/composition-api'
-import { BlogProps, ContentProps } from '@/types/global';
+<script>
+export default {
+  async asyncData({ $content, params }) {
+    const article = await $content(params.slug).fetch()
 
-export default defineComponent({
-  setup () {
-    const { $content, params } = useContext()
-    const slug = computed(() => params.value.slug)
-
-    const article = useStatic(async slug => (
-      await $content(slug).fetch<BlogProps>()
-    ), slug, 'article')
-
-    const pagination = useStatic(async slug => (
-      await $content()
-        .only(['title', 'slug'])
-        .sortBy('createdAt', 'asc')
-        .surround(slug)
-        .fetch<BlogProps>() as Array<Partial<BlogProps> | null>
-    ), slug, 'pagination')
+    const [prev, next] = await $content()
+      .only(['title', 'slug'])
+      .sortBy('createdAt', 'desc')
+      .surround(params.slug)
+      .fetch()
 
     return {
       article,
-      prev: pagination.value?.[0],
-      next: pagination.value?.[1]
+      prev,
+      next
     }
   },
   head() {
-    const article = this.article as ContentProps
     return {
-      title: `${article.title} | Coders for Causes`,
+      title: `${this.article.title} | Coders for Causes`,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: article.description
+          content: this.article.description
         },
         {
           hid: 'twitter:title',
           name: 'twitter:title',
-          content: `${article.title} | Coders for Causes`
+          content: `${this.article.title} | Coders for Causes`
         },
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: article.description
+          content: this.article.description
         },
         {
           hid: 'twitter:image',
           name: 'twitter:image',
           content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
-            article.slug.split('-').join('_')
+            this.article.slug.split('-').join('_')
           )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
         },
         {
           hid: 'twitter:url',
           name: 'twitter:url',
-          content: `https://guides.codersforcauses.org/blog/${article.slug}`
+          content: `https://guides.codersforcauses.org/blog/${this.article.slug}`
         },
         {
           hid: 'og:title',
           property: 'og:title',
-          content: `${article.title} | Coders for Causes`
+          content: `${this.article.title} | Coders for Causes`
         },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: article.description
+          content: this.article.description
         },
         {
           hid: 'og:image',
           property: 'og:image',
           content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
-            article.slug.split('-').join('_')
+            this.article.slug.split('-').join('_')
           )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
         },
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `https://guides.codersforcauses.org/blog/${article.slug}`
+          content: `https://guides.codersforcauses.org/blog/${this.article.slug}`
         }
       ]
     }
   },
   methods: {
-    formatDate(date: string): string {
+    formatDate(date) {
       return new Date(date).toLocaleDateString('en-AU', {
         year: 'numeric',
         month: 'long',
@@ -174,7 +163,7 @@ export default defineComponent({
       })
     }
   }
-})
+}
 </script>
 
 <style>
@@ -211,7 +200,8 @@ export default defineComponent({
 .nuxt-content h3 {
   @apply text-lg md:text-xl;
 }
-.nuxt-content p > code, .nuxt-content li > code {
+.nuxt-content p > code,
+.nuxt-content li > code {
   @apply font-bold px-2 text-sm bg-alt-dark bg-opacity-20 dark:bg-alt-light dark:bg-opacity-20;
 }
 .nuxt-content blockquote {
@@ -227,10 +217,12 @@ export default defineComponent({
   list-style-type: square;
   @apply list-inside space-y-2;
 }
-.nuxt-content li > ul, .nuxt-content li > ol {
+.nuxt-content li > ul,
+.nuxt-content li > ol {
   @apply ml-6;
 }
-.nuxt-content li > p {
+.nuxt-content li > p,
+.nuxt-content li > a {
   @apply inline;
 }
 .nuxt-content-editor {

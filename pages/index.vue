@@ -5,20 +5,13 @@
   </main>
 </template>
 
-<script lang="ts">
-import { defineComponent, useContext, useAsync } from '@nuxtjs/composition-api'
-import { BlogProps } from '@/types/global'
-
-export default defineComponent({
-  setup () {
-    const { $content } = useContext()
-
-    const articles = useAsync(async () => (
-      await $content()
-        .only(['title', 'description', 'img', 'alt', 'slug', 'tags', 'author'])
-        .sortBy('createdAt', 'desc')
-        .fetch<BlogProps>()
-    ))
+<script>
+export default {
+  async asyncData({ $content }) {
+    const articles = await $content()
+      .only(['title', 'description', 'img', 'alt', 'slug', 'tags', 'author'])
+      .sortBy('createdAt', 'desc')
+      .fetch()
 
     return {
       articles
@@ -76,5 +69,5 @@ export default defineComponent({
       }
     ]
   }
-})
+}
 </script>

@@ -39,29 +39,14 @@
   </header>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, useContext, useAsync } from '@nuxtjs/composition-api'
-import { BlogProps } from '@/types/global'
-
-export default defineComponent({
-  setup () {
-    const { $content, $colorMode } = useContext()
-
-    const articles = useAsync(async () => (
-      await $content()
-        .only(['title', 'description', 'img', 'alt', 'slug', 'tags', 'author'])
-        .sortBy('createdAt', 'desc')
-        .fetch<BlogProps>()
-    ))
-
-    const toggleHeading = computed(() => $colorMode.preference === 'light' ? 'dark' : 'light')
-
-    return {
-      articles,
-      toggleHeading
+<script>
+export default {
+  computed: {
+    toggleHeading() {
+      return this.$colorMode.preference === 'light' ? 'dark' : 'light'
     }
   }
-})
+}
 </script>
 
 <style scoped>

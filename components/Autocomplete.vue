@@ -46,49 +46,42 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ssrRef, useContext, watch } from '@nuxtjs/composition-api'
-import { BlogProps, ContentProps } from '@/types/global'
-
-export default defineComponent({
-  setup() {
-    const showOptions = ssrRef(false)
-    const query = ssrRef('')
-    const articles = ssrRef<Array<ContentProps | never>>([])
-    const { $content } = useContext()
-
-    watch(query, async query => {
-      if(!query) {
-        showOptions.value = false
-        articles.value = []
+<script>
+export default {
+  data() {
+    return {
+      showOptions: false,
+      query: '',
+      articles: []
+    }
+  },
+  watch: {
+    async query(val) {
+      if(!val) {
+        this.showOptions = false
+        this.articles = []
         return
       }
 
-      showOptions.value = true
-      articles.value = await $content()
+      this.showOptions = true
+      this.articles = await this.$content()
         .only(['title', 'slug'])
         .sortBy('createdAt', 'asc')
         .limit(6)
-        .search(query)
-        .fetch<BlogProps>() as Array<ContentProps>
-    })
-
-    return {
-      query,
-      showOptions,
-      articles
+        .search(val)
+        .fetch()
     }
   },
   methods: {
     display()  {
       if (this.query)
-      this.showOptions = true
+        this.showOptions = true
     },
     reset() {
       this.showOptions = false
     }
   }
-})
+}
 </script>
 
 <style scoped>

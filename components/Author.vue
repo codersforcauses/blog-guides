@@ -20,16 +20,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import { AuthorProps } from '@/types/global'
-
-export default defineComponent({
+<script>
+export default {
   props: {
     author: {
-      type: Object as () => AuthorProps,
+      type: Object,
       required: true
     }
   }
-})
+}
 </script>

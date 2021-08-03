@@ -39,15 +39,15 @@ export default {
   plugins: [],
   components: true,
   buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/stylelint-module',
-    '@nuxtjs/composition-api/module',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/stylelint-module'
   ],
   modules: ['@nuxt/content'],
   content: {
+    fullTextSearchFields: ['title', 'slug'],
     markdown: {
       remarkPlugins: [['remark-emoji', { emoticon: true }]],
       prism: {
@@ -56,9 +56,7 @@ export default {
     },
     nestedProperties: ['author.name']
   },
-  build: {
-    optimizeCSS: true
-  },
+  build: {},
   colorMode: {
     classSuffix: ''
   },

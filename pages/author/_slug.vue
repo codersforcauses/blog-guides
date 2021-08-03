@@ -23,7 +23,7 @@
             :alt="articles[0].author.name"
             class="object-cover w-full h-full"
           />
-          <span v-else class="uppercase">{{ initials }}</span>
+          <!-- <span v-else class="uppercase">{{ initials }}</span> -->
         </div>
         <div class="ml-4">
           {{ articles[0].author.name }}
@@ -43,92 +43,82 @@
   </main>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, useContext, useStatic, useMeta } from '@nuxtjs/composition-api'
-import { BlogProps } from '@/types/global';
+<script>
+export default {
+  async asyncData({ $content, params }) {
+    const articles = await $content()
+      .where({
+        'author.name': {
+          $regex: [decodeURIComponent(params.slug), 'i']
+        }
+      })
+      .without(['body', 'toc', 'dir', 'updatedAt', 'createdAt'])
+      .sortBy('createdAt', 'desc')
+      .fetch()
 
-export default defineComponent({
-  setup () {
-    const { $content, params } = useContext()
-    const slug = computed(() => decodeURIComponent(params.value.slug))
+    // const names = articles[0].author.name.split(' ')
+    // const initials = names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0)
 
-    const articles = useStatic(async slug => (
-      await $content()
-        .where({
-          'author.name': {
-            $regex: [slug, 'i']
-          }
-        })
-        .without(['body', 'toc', 'dir', 'updatedAt', 'createdAt'])
-        .sortBy('createdAt', 'asc')
-        .fetch<BlogProps>()
-    ), slug, 'articles')
-
-    const names = Array.isArray(articles) && articles[0].author.name.split(' ') || ['Anonymous']
-    const initials = computed<string>(() => names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0))
-
-    const author = Array.isArray(articles) && articles[0].author
-
-    useMeta(() => ({
-      title: `${author.name} | Coders for Causes`,
+    return {
+      articles,
+      // initials
+    }
+  },
+  head() {
+    return {
+      title: `${this.articles[0].author.name} | Coders for Causes`,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: author.bio
+          content: this.articles[0].author.bio
         },
         {
           hid: 'twitter:title',
           name: 'twitter:title',
-          content: `${author.name} | Coders for Causes`
+          content: `${this.articles[0].author.name} | Coders for Causes`
         },
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: author.bio
+          content: this.articles[0].author.bio
         },
         {
           hid: 'twitter:image',
           name: 'twitter:image',
           content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
-            author.name.split('-').join('_')
+            this.articles[0].author.name.split('-').join('_')
           )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
         },
         {
           hid: 'twitter:url',
           name: 'twitter:url',
-          content: `https://guides.codersforcauses.org/blog/${author.name}`
+          content: `https://guides.codersforcauses.org/blog/${this.articles[0].author.name}`
         },
         {
           hid: 'og:title',
           property: 'og:title',
-          content: `${author.name} | Coders for Causes`
+          content: `${this.articles[0].author.name} | Coders for Causes`
         },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: author.bio
+          content: this.articles[0].author.bio
         },
         {
           hid: 'og:image',
           property: 'og:image',
           content: `https://og-social-cards.vercel.app/**.%2F${encodeURIComponent(
-            author.name.split('-').join('_')
+            this.articles[0].author.name.split('-').join('_')
           )}**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fcodersforcauses.org%2Flogo%2Fcfc_logo_white_full.svg`
         },
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `https://guides.codersforcauses.org/blog/${author.name}`
+          content: `https://guides.codersforcauses.org/blog/${this.articles[0].author.name}`
         }
       ]
-    }))
-
-    return {
-      articles,
-      initials
     }
-  },
-  head: {}
-})
+  }
+}
 </script>

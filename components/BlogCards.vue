@@ -69,18 +69,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import { ContentProps } from '@/types/global'
-
-export default defineComponent({
+<script>
+export default {
   props: {
     articles: {
-      type: Array as () => Array<ContentProps>,
+      type: Array,
       default: null
     }
   }
-})
+}
 </script>
 
 <style scoped>
