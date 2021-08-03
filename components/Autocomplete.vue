@@ -2,7 +2,7 @@
   <div>
     <div class="absolute z-20 w-10 h-10 transition-all duration-300 max-container top-3 right-3 bg-secondary bg-opacity-80 text-primary sm:w-full sm:relative sm:top-auto sm:right-auto sm:focus-within:left-auto focus-within:left-3 focus-within:w-full focus-within:bg-opacity-100">
       <span
-        class="absolute flex items-center h-full px-1 text-2xl select-none material-icons-sharp text-primary"
+        class="absolute flex items-center h-10 px-1 text-2xl select-none material-icons-sharp text-primary"
         @click="$refs.search.focus()"
       >
         search
