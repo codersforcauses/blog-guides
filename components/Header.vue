@@ -43,7 +43,7 @@
 export default {
   computed: {
     toggleHeading() {
-      return this.$colorMode.preference === 'light' ? 'dark' : 'light'
+      return this.$colorMode.preference !== 'light' ? 'dark' : 'light'
     }
   }
 }
