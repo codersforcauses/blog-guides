@@ -8,7 +8,7 @@
           alt="Coders for Causes wordmark"
           class="object-contain h-10 sm:h-12"
         />
-        <a href="http://codersforcauses.org">
+        <a href="http://codersforcauses.org" class="focus:outline-none focus:ring focus:ring-accent">
           Back to Main Website
         </a>
       </div>

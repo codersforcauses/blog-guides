@@ -16,7 +16,10 @@
         <span class="md:hidden">
           <p class="mb-0">
             by
-            <nuxt-link :to="{ name: 'author-slug', params: { slug: encodeURIComponent(article.author.name.toLowerCase()) } }">
+            <nuxt-link
+              class="focus:outline-none focus:ring focus:ring-accent"
+              :to="{ name: 'author-slug', params: { slug: encodeURIComponent(article.author.name.toLowerCase()) } }"
+            >
               {{ article.author.name }}
             </nuxt-link>
           </p>
@@ -30,7 +33,7 @@
           <nuxt-link
             v-if="prev"
             :to="{ name: 'blog-slug', params: { slug: prev.slug } }"
-            class="flex items-center max-w-sm py-2 pr-2 font-bold border border-primary hover:bg-primary hover:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary"
+            class="flex items-center max-w-sm py-2 pr-2 font-bold border border-primary hover:bg-primary hover:text-secondary focus:outline-none focus:bg-primary focus:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary dark:focus:bg-secondary dark:focus:text-primary"
           >
             <span class="mr-2 material-icons-sharp">chevron_left</span>
             {{ prev.title }}
@@ -39,7 +42,7 @@
           <nuxt-link
             v-if="next"
             :to="{ name: 'blog-slug', params: { slug: next.slug } }"
-            class="flex items-center max-w-xs py-2 pl-2 font-bold border border-primary hover:bg-primary hover:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary"
+            class="flex items-center max-w-xs py-2 pl-2 font-bold border border-primary hover:bg-primary hover:text-secondary focus:outline-none focus:bg-primary focus:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary dark:focus:bg-secondary dark:focus:text-primary"
           >
             {{ next.title }}
             <span class="ml-2 material-icons-sharp">chevron_right</span>
@@ -208,7 +211,7 @@ export default {
   @apply italic pl-4 py-2 border-l-4 border-alt-dark border-opacity-75 dark:border-alt-light dark:border-opacity-75;
 }
 .nuxt-content a {
-  @apply text-alt-dark hover:underline dark:text-alt-light;
+  @apply text-alt-dark hover:underline dark:text-alt-light focus:outline-none focus:ring focus:ring-accent;
 }
 .nuxt-content ol {
   @apply list-inside list-decimal;
