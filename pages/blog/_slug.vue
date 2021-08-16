@@ -1,5 +1,5 @@
 <template>
-  <article v-if="article" class="max-w-none">
+  <article class="max-w-none">
     <div v-show="article.img" class="relative w-screen h-96">
       <img
         loading="lazy"
@@ -169,7 +169,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .blog-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -182,53 +182,5 @@ export default {
 
 .list-square {
   list-style-type: square;
-}
-
-.nuxt-content  {
-  @apply space-y-3;
-}
-.nuxt-content-highlight {
-  @apply relative;
-}
-.nuxt-content-highlight .filename {
-  @apply absolute right-0 text-secondary font-light z-10 mr-1.5 mt-0.5 text-sm;
-}
-.nuxt-content-highlight pre {
-  max-width: calc(100vw - 1.5rem);
-  @apply rounded-none p-3 pt-4 text-sm overflow-x-auto;
-}
-.nuxt-content h2 {
-  @apply text-2xl md:text-3xl;
-}
-.nuxt-content h3 {
-  @apply text-lg md:text-xl;
-}
-.nuxt-content p > code,
-.nuxt-content li > code {
-  @apply font-bold px-2 text-sm bg-alt-dark bg-opacity-20 dark:bg-alt-light dark:bg-opacity-20;
-}
-.nuxt-content blockquote {
-  @apply italic pl-4 py-2 border-l-4 border-alt-dark border-opacity-75 dark:border-alt-light dark:border-opacity-75;
-}
-.nuxt-content a {
-  @apply text-alt-dark hover:underline dark:text-alt-light focus:outline-none focus:ring focus:ring-accent;
-}
-.nuxt-content ol {
-  @apply list-inside list-decimal;
-}
-.nuxt-content ul {
-  list-style-type: square;
-  @apply list-inside space-y-2;
-}
-.nuxt-content li > ul,
-.nuxt-content li > ol {
-  @apply ml-6;
-}
-.nuxt-content li > p,
-.nuxt-content li > a {
-  @apply inline;
-}
-.nuxt-content-editor {
-  @apply bg-primary bg-opacity-50 text-secondary;
 }
 </style>

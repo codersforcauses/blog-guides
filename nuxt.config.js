@@ -1,3 +1,19 @@
+import highlightjs from 'highlight.js/lib/core'
+import hljsDefineGraphQL from 'highlightjs-graphql'
+
+// register the required languages.
+// Refer to https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md for the full list
+hljsDefineGraphQL(highlightjs)
+highlightjs.registerLanguage('bash', require('highlight.js/lib/languages/bash'))
+highlightjs.registerLanguage('c', require('highlight.js/lib/languages/c'))
+highlightjs.registerLanguage('php', require('highlight.js/lib/languages/php'))
+highlightjs.registerLanguage('html', require('highlight.js/lib/languages/xml'))
+highlightjs.registerLanguage(
+  'js',
+  require('highlight.js/lib/languages/javascript')
+)
+highlightjs.registerLanguage('json', require('highlight.js/lib/languages/json'))
+
 export default {
   target: 'static',
   head: {
@@ -35,7 +51,7 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-  css: [],
+  css: ['@assets/css/code.css'],
   plugins: [],
   components: true,
   buildModules: [
@@ -50,8 +66,16 @@ export default {
     fullTextSearchFields: ['title', 'slug'],
     markdown: {
       remarkPlugins: [['remark-emoji', { emoticon: true }]],
-      prism: {
-        theme: 'prism-themes/themes/prism-a11y-dark.css'
+      highlighter(rawCode, lang, { fileName, lineHighlights }) {
+        const highlightedCode = (
+          lang
+            ? highlightjs.highlight(rawCode, { language: lang })
+            : highlightjs.highlightAuto(rawCode)
+        ).value
+
+        return `<pre class="nuxt-content-highlight">${
+          fileName ? `<span class="filename">${fileName}</span>` : ''
+        }<code class="hljs ${lang}">${highlightedCode}</code></pre>`
       }
     },
     nestedProperties: ['author.name']

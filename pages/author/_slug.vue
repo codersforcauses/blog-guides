@@ -11,35 +11,33 @@
         </nuxt-link>
       </div>
     </div>
-    <template v-if="articles">
-      <div class="container flex items-center px-3 mx-auto">
-        <div
-          class="flex items-center justify-center w-32 h-32 -mt-16 font-mono border border-secondary bg-primary text-7xl text-secondary md:w-40 md:h-40 md:-mt-20"
-        >
-          <img
-            v-if="articles[0].author.img"
-            loading="lazy"
-            :src="articles[0].author.img"
-            :alt="articles[0].author.name"
-            class="object-cover w-full h-full"
-          />
-          <!-- <span v-else class="uppercase">{{ initials }}</span> -->
-        </div>
-        <div class="ml-4">
-          {{ articles[0].author.name }}
-        </div>
+    <div class="container flex items-center px-3 mx-auto">
+      <div
+        class="flex items-center justify-center w-32 h-32 -mt-16 font-mono border border-secondary bg-primary text-7xl text-secondary md:w-40 md:h-40 md:-mt-20"
+      >
+        <img
+          v-if="articles[0].author.img"
+          loading="lazy"
+          :src="articles[0].author.img"
+          :alt="articles[0].author.name"
+          class="object-cover w-full h-full"
+        />
+        <span v-else class="uppercase">{{ initials }}</span>
       </div>
-      <p class="container px-3 mx-auto mt-4">
-        {{ articles[0].author.bio }}
-      </p>
+      <div class="ml-4">
+        {{ articles[0].author.name }}
+      </div>
+    </div>
+    <p class="container px-3 mx-auto mt-4">
+      {{ articles[0].author.bio }}
+    </p>
 
-      <div class="container px-3 mx-auto mt-8 mb-8 md:mt-16">
-        <h1 class="mb-4 text-2xl font-bold">
-          Articles by {{ articles[0].author.name }}:
-        </h1>
-        <blog-cards :articles="articles" />
-      </div>
-    </template>
+    <div class="container px-3 mx-auto mt-8 mb-8 md:mt-16">
+      <h1 class="mb-4 text-2xl font-bold">
+        Articles by {{ articles[0].author.name }}:
+      </h1>
+      <blog-cards :articles="articles" />
+    </div>
   </main>
 </template>
 
@@ -56,12 +54,12 @@ export default {
       .sortBy('createdAt', 'desc')
       .fetch()
 
-    // const names = articles[0].author.name.split(' ')
-    // const initials = names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0)
+    const names = articles[0].author.name.split(' ')
+    const initials = names.length > 2 ? `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}` : names[0].charAt(0)
 
     return {
       articles,
-      // initials
+      initials
     }
   },
   head() {
