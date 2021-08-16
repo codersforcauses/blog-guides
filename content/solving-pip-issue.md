@@ -15,7 +15,7 @@ author:
 
 The default python/pip installation on mac produces some issues when trying to run `pip install` here are some ways to fix it.
 
-```bash
+```shell
 sudo pip install
 brew install python
 pip install --ignore-installed <package you want>

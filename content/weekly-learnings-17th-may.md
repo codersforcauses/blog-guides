@@ -50,7 +50,9 @@ Eslint with prettier always has conflicting issues. However doing this seems to 
 }
 ```
 
-`yarn add --dev eslint-config-prettier babel-eslint`
+```shell
+yarn add --dev eslint-config-prettier babel-eslint
+```
 
 ## File structure and project and organisation
 

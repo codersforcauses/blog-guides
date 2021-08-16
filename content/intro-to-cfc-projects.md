@@ -33,7 +33,7 @@ If you want a closer look at the tools refer to this https://guides.codersforcau
 
 Check you installed the tools correctly
 
-```bash
+```shell
 npm -v
 node -v
 git --version

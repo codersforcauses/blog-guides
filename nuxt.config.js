@@ -1,18 +1,33 @@
-import highlightjs from 'highlight.js/lib/core'
+import highlightjs from 'highlight.js/lib/common'
 import hljsDefineGraphQL from 'highlightjs-graphql'
 
-// register the required languages.
+// register the required languages or add  plugins.
 // Refer to https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md for the full list
 hljsDefineGraphQL(highlightjs)
-highlightjs.registerLanguage('bash', require('highlight.js/lib/languages/bash'))
-highlightjs.registerLanguage('c', require('highlight.js/lib/languages/c'))
-highlightjs.registerLanguage('php', require('highlight.js/lib/languages/php'))
-highlightjs.registerLanguage('html', require('highlight.js/lib/languages/xml'))
-highlightjs.registerLanguage(
-  'js',
-  require('highlight.js/lib/languages/javascript')
-)
-highlightjs.registerLanguage('json', require('highlight.js/lib/languages/json'))
+
+// unregister unnecessary languages
+highlightjs.unregisterLanguage('bash')
+highlightjs.unregisterLanguage('cpp')
+highlightjs.unregisterLanguage('php-template')
+highlightjs.unregisterLanguage('yaml')
+highlightjs.unregisterLanguage('python-repl')
+highlightjs.unregisterLanguage('csharp')
+highlightjs.unregisterLanguage('diff')
+highlightjs.unregisterLanguage('ruby')
+highlightjs.unregisterLanguage('go')
+highlightjs.unregisterLanguage('ini')
+highlightjs.unregisterLanguage('java')
+highlightjs.unregisterLanguage('kotlin')
+highlightjs.unregisterLanguage('less')
+highlightjs.unregisterLanguage('lua')
+highlightjs.unregisterLanguage('makefile')
+highlightjs.unregisterLanguage('perl')
+highlightjs.unregisterLanguage('objectivec')
+highlightjs.unregisterLanguage('r')
+highlightjs.unregisterLanguage('rust')
+highlightjs.unregisterLanguage('scss')
+highlightjs.unregisterLanguage('swift')
+highlightjs.unregisterLanguage('vbnet')
 
 export default {
   target: 'static',
