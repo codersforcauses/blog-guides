@@ -51,10 +51,19 @@ body {
   }
   .nuxt-content-highlight {
     max-width: calc(100vw - 1.5rem);
-    @apply relative overflow-x-auto text-sm rounded-none;
+    @apply relative text-sm rounded-none;
+  }
+  .nuxt-content-highlight .highlight {
+    @apply absolute w-full mt-10;
+  }
+  .nuxt-content-highlight .highlight-line {
+    @apply border-l-2 border-accent bg-accent bg-opacity-10 dark:bg-accent dark:bg-opacity-5;
   }
   .nuxt-content-highlight .filename {
-    @apply absolute right-0 text-primary font-light z-10 mr-1.5 mt-0.5 text-sm dark:text-secondary;
+    @apply absolute z-10 text-sm font-light opacity-75 select-none right-2 top-1 text-primary dark:text-secondary;
+  }
+  .nuxt-content-highlight .clipboard {
+    @apply absolute bottom-0 right-0 z-10 flex items-center justify-center p-1 font-light select-none text-secondary bg-alt-dark dark:text-primary dark:bg-alt-light;
   }
   .nuxt-content h2 {
     @apply text-2xl md:text-3xl;
