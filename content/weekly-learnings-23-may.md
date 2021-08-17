@@ -80,7 +80,7 @@ try {
 
 has become the new standard for writing async applications due it is synchronous like nature that makes it easier for developers to reason with. However one annoying thing that we would have to do is wrap the calls in an async function.
 
-```js{1,7}
+```js{1,9}
 ;(async () => {
   try {
     const response = await someAsyncCallThatReturnsAPromise()
