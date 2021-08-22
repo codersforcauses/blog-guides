@@ -1,5 +1,5 @@
 <template>
-  <div class="w-2/5 mb-6 lg:w-full lg:mb-12">
+  <div class="md:w-full lg:mb-12">
     <nuxt-link
       :to="{ name: 'author-slug', params: { slug: encodeURIComponent(author.name.toLowerCase()) } }"
       class="flex flex-col bg-alt-light dark:bg-primary"

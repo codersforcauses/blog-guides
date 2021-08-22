@@ -10,7 +10,7 @@
         tabindex="-1"
         :to="{
           name: 'blog-slug',
-          params: { slug: article.slug }
+          params: { slug: encodeURIComponent(article.slug.toLowerCase()) }
         }"
       >
         <img
@@ -35,7 +35,7 @@
           tabindex="-1"
           :to="{
             name: 'blog-slug',
-            params: { slug: article.slug }
+            params: { slug: encodeURIComponent(article.slug.toLowerCase()) }
           }"
         >
           <h2 class="font-mono text-xl font-bold cursor-pointer">{{ article.title }}</h2>
@@ -59,7 +59,7 @@
           class="px-3 py-2 transition-colors border border-primary bg-primary text-secondary w-max focus:outline-none focus:ring focus:ring-inset focus:ring-accent dark:border-secondary dark:bg-transparent dark:hover:bg-secondary dark:hover:text-primary hover:bg-dark"
           :to="{
             name: 'blog-slug',
-            params: { slug: article.slug }
+            params: { slug: encodeURIComponent(article.slug.toLowerCase()) }
           }"
         >
           Read more

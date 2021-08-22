@@ -13,6 +13,6 @@ author:
   img: /content/davidthrone.jpg
 ---
 
-```c
+```env
 mysql://USER:PASS@HOST:PORT/DATABASENAME
 ```

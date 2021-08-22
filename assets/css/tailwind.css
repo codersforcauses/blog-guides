@@ -49,12 +49,15 @@ body {
   .nuxt-content {
     @apply space-y-3;
   }
+
+  /*! purgecss start ignore */
+
   .nuxt-content-highlight {
     max-width: calc(100vw - 1.5rem);
-    @apply relative text-sm rounded-none;
+    @apply relative overflow-x-auto text-sm rounded-none;
   }
   .nuxt-content-highlight .highlight {
-    @apply absolute w-full mt-10;
+    @apply absolute w-full mt-8 overflow-x-auto;
   }
   .nuxt-content-highlight .highlight-line {
     @apply border-l-2 border-accent bg-accent bg-opacity-10 dark:bg-accent dark:bg-opacity-5;
@@ -62,9 +65,12 @@ body {
   .nuxt-content-highlight .filename {
     @apply absolute z-10 text-sm font-light opacity-75 select-none right-2 top-1 text-primary dark:text-secondary;
   }
-  .nuxt-content-highlight .clipboard {
-    @apply absolute bottom-0 right-0 z-10 flex items-center justify-center p-1 font-light select-none text-secondary bg-alt-dark dark:text-primary dark:bg-alt-light;
+  .nuxt-content-highlight .lang {
+    @apply absolute z-10 font-sans text-xs font-light opacity-75 select-none right-2 top-1 text-primary dark:text-secondary;
   }
+
+  /*! purgecss end ignore */
+
   .nuxt-content h2 {
     @apply text-2xl md:text-3xl;
   }

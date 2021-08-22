@@ -32,7 +32,7 @@
         <div class="flex justify-between mt-4">
           <nuxt-link
             v-if="prev"
-            :to="{ name: 'blog-slug', params: { slug: prev.slug } }"
+            :to="{ name: 'blog-slug', params: { slug: encodeURIComponent(prev.slug.toLowerCase()) } }"
             class="flex items-center max-w-sm py-2 pr-2 font-bold border border-primary hover:bg-primary hover:text-secondary focus:outline-none focus:bg-primary focus:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary dark:focus:bg-secondary dark:focus:text-primary"
           >
             <span class="mr-2 material-icons-sharp">chevron_left</span>
@@ -41,7 +41,7 @@
           <span v-else>&nbsp;</span>
           <nuxt-link
             v-if="next"
-            :to="{ name: 'blog-slug', params: { slug: next.slug } }"
+            :to="{ name: 'blog-slug', params: { slug: encodeURIComponent(next.slug.toLowerCase()) } }"
             class="flex items-center max-w-xs py-2 pl-2 font-bold border border-primary hover:bg-primary hover:text-secondary focus:outline-none focus:bg-primary focus:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary dark:focus:bg-secondary dark:focus:text-primary"
           >
             {{ next.title }}
@@ -50,14 +50,14 @@
           <span v-else>&nbsp;</span>
         </div>
       </div>
-      <div class="static top-0 hidden md:block">
-        <p class="mb-1">{{ article.description }}</p>
-        <p class="mb-4">
-          <small>Last Updated: {{ formatDate(article.updatedAt) }}</small>
-        </p>
-        <!-- table of contents -->
-        <div class="sticky top-0 overflow-y-auto">
-          <nav v-if="article.toc.length > 0" class="mb-4">
+      <div class="hidden grid-cols-2 gap-4 md:grid lg:block">
+        <div>
+          <p class="mb-1">{{ article.description }}</p>
+          <p class="mb-4">
+            <small>Last Updated: {{ formatDate(article.updatedAt) }}</small>
+          </p>
+          <!-- table of contents -->
+          <nav v-show="article.toc.length > 0" class="mb-4">
             <small class="font-mono">Table of Contents</small>
             <ul class="opacity-75">
               <li
@@ -75,10 +75,10 @@
               </li>
             </ul>
           </nav>
-
-          <!-- content author component -->
-          <author :author="article.author" />
         </div>
+
+        <!-- content author component -->
+        <author :author="article.author" />
       </div>
     </div>
   </article>
@@ -87,7 +87,7 @@
 <script>
 export default {
   async asyncData({ $content, params }) {
-    const article = await $content(params.slug).fetch()
+    const article = await $content(decodeURIComponent(params.slug)).fetch()
 
     const [prev, next] = await $content()
       .only(['title', 'slug'])

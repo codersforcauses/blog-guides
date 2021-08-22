@@ -29,6 +29,8 @@ hljs.unregisterLanguage('scss')
 hljs.unregisterLanguage('swift')
 hljs.unregisterLanguage('vbnet')
 
+hljs.registerAliases('env', { languageName: 'c' })
+
 export default {
   target: 'static',
   head: {
@@ -124,9 +126,12 @@ export default {
             : hljs.highlightAuto(rawCode)
         ).value
 
-        const filename = `<span class="filename">${fileName || lang}</span>`
+        const filename = fileName
+          ? `<span class="filename">${fileName}</span>`
+          : `<span class="lang">${lang}</span>`
+        const code = `<code class="hljs ${lang}">${highlightedCode}</code>`
 
-        return `<pre>${div}${filename}<code class="hljs ${lang}">${highlightedCode}</code></pre>`
+        return `<pre>${div}${filename}${code}</pre>`
       }
     },
     nestedProperties: ['author.name']
