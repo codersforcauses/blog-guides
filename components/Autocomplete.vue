@@ -2,7 +2,7 @@
   <div>
     <div class="absolute z-20 w-10 h-10 transition-all duration-300 max-container top-3 right-3 bg-secondary bg-opacity-80 text-primary sm:w-full sm:relative sm:top-auto sm:right-auto sm:focus-within:left-auto focus-within:left-3 focus-within:w-full focus-within:bg-opacity-100">
       <span
-        class="absolute h-10 p-1 text-2xl select-none material-icons-sharp text-primary"
+        class="material-icons-sharp search"
         @click="$refs.search.focus()"
       >
         search
@@ -13,7 +13,7 @@
         type="search"
         placeholder="Search Articles"
         autocomplete="off"
-        class="w-full h-full py-2 pl-8 pr-2 bg-transparent border border-b-0 border-primary placeholder-opacity-60 placeholder-primary focus:outline-none"
+        class="w-full h-full py-2 pl-8 pr-2 bg-transparent border border-b-0 rounded-none border-primary placeholder-opacity-60 placeholder-primary focus:outline-none"
         @focus="display"
       />
       <div v-show="showOptions" class="absolute w-full border border-t-0 bg-secondary text-primary border-primary">
@@ -22,7 +22,7 @@
             v-for="article of articles"
             :key="article.slug"
             class="px-2 py-1 duration-75 hover:bg-primary hover:text-secondary focus:bg-primary focus:text-secondary focus:outline-none"
-            :to="{ name: 'blog-slug', params: { slug: article.slug } }"
+            :to="{ name: 'blog-slug', params: { slug: encodeURIComponent(article.slug.toLowerCase()) } }"
             @click.native="query = ''"
           >
             {{ article.title }}
@@ -87,5 +87,8 @@ export default {
 <style scoped>
 .max-container {
   max-width: calc(100vw - 1.5rem);
+}
+.search{
+ @apply absolute h-10 p-1 text-2xl select-none text-primary;
 }
 </style>
