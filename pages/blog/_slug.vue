@@ -1,26 +1,27 @@
 <template>
-  <article class="w-screen mb-8">
+  <article class="max-w-none">
     <div v-show="article.img" class="relative w-screen h-96">
       <img
         loading="lazy"
         :src="article.img"
         :alt="article.alt"
-        class="absolute h-full w-full object-cover"
+        class="absolute z-0 object-cover w-full h-full"
       />
     </div>
-    <div
-      class="sm:container sm:mx-auto px-4 relative mt-12 blog-grid gap-16 lg:gap-24"
-    >
+    <div class="container relative gap-16 px-3 py-8 mx-auto blog-grid lg:gap-24">
       <div>
-        <h1 class="overflow-x-hidden text-4xl md:text-5xl mb-4">
+        <h1 class="mb-4 text-3xl sm:text-4xl md:text-5xl">
           {{ article.title }}
         </h1>
         <span class="md:hidden">
           <p class="mb-0">
             by
-            <NuxtLink :to="`/author/${article.author.name}`">
+            <nuxt-link
+              class="focus:outline-none focus:ring focus:ring-accent"
+              :to="{ name: 'author-slug', params: { slug: encodeURIComponent(article.author.name.toLowerCase()) } }"
+            >
               {{ article.author.name }}
-            </NuxtLink>
+            </nuxt-link>
           </p>
           <p class="mb-4">
             <small>Last Updated: {{ formatDate(article.updatedAt) }}</small>
@@ -28,17 +29,35 @@
         </span>
         <!-- content from markdown -->
         <nuxt-content :document="article" />
-        <!-- prevNext component -->
-        <PrevNext :prev="prev" :next="next" class="mt-8" />
+        <div class="flex justify-between mt-4">
+          <nuxt-link
+            v-if="prev"
+            :to="{ name: 'blog-slug', params: { slug: encodeURIComponent(prev.slug.toLowerCase()) } }"
+            class="flex items-center max-w-sm py-2 pr-2 font-bold border border-primary hover:bg-primary hover:text-secondary focus:outline-none focus:bg-primary focus:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary dark:focus:bg-secondary dark:focus:text-primary"
+          >
+            <span class="mr-2 material-icons-sharp">chevron_left</span>
+            {{ prev.title }}
+          </nuxt-link>
+          <span v-else>&nbsp;</span>
+          <nuxt-link
+            v-if="next"
+            :to="{ name: 'blog-slug', params: { slug: encodeURIComponent(next.slug.toLowerCase()) } }"
+            class="flex items-center max-w-xs py-2 pl-2 font-bold border border-primary hover:bg-primary hover:text-secondary focus:outline-none focus:bg-primary focus:text-secondary dark:border-secondary dark:hover:bg-secondary dark:hover:text-primary dark:focus:bg-secondary dark:focus:text-primary"
+          >
+            {{ next.title }}
+            <span class="ml-2 material-icons-sharp">chevron_right</span>
+          </nuxt-link>
+          <span v-else>&nbsp;</span>
+        </div>
       </div>
-      <div class="static top-0 hidden md:block">
-        <p class="mb-1">{{ article.description }}</p>
-        <p class="mb-4">
-          <small>Last Updated: {{ formatDate(article.updatedAt) }}</small>
-        </p>
-        <!-- table of contents -->
-        <div class="sticky top-0 overflow-y-auto">
-          <nav v-if="article.toc.length > 0" class="mb-6">
+      <div class="hidden grid-cols-2 gap-4 md:grid lg:block">
+        <div>
+          <p class="mb-1">{{ article.description }}</p>
+          <p class="mb-4">
+            <small>Last Updated: {{ formatDate(article.updatedAt) }}</small>
+          </p>
+          <!-- table of contents -->
+          <nav v-show="article.toc.length > 0" class="mb-4">
             <small class="font-mono">Table of Contents</small>
             <ul class="opacity-75">
               <li
@@ -47,42 +66,40 @@
                 class="list-inside"
                 :class="{
                   'font-semibold py-1 list-square': link.depth === 2,
-                  'ml-2 pb-1 list-disc reduced-font': link.depth === 3
+                  'ml-2 pb-1 list-disc text-sm': link.depth === 3
                 }"
               >
-                <NuxtLink :to="`#${link.id}`" class="hover:underline">
+                <nuxt-link :to="`#${link.id}`" class="hover:underline">
                   {{ link.text }}
-                </NuxtLink>
+                </nuxt-link>
               </li>
             </ul>
           </nav>
-
-          <!-- content author component -->
-          <author :author="article.author" />
         </div>
+
+        <!-- content author component -->
+        <author :author="article.author" />
       </div>
     </div>
   </article>
 </template>
+
 <script>
 export default {
+  scrollToTop: true,
   async asyncData({ $content, params }) {
-    const article = await $content('articles', params.slug).fetch()
-    const [prev, next] = await $content('articles')
+    const article = await $content(decodeURIComponent(params.slug)).fetch()
+
+    const [prev, next] = await $content()
       .only(['title', 'slug'])
-      .sortBy('createdAt', 'asc')
+      .sortBy('createdAt', 'desc')
       .surround(params.slug)
       .fetch()
+
     return {
       article,
       prev,
       next
-    }
-  },
-  methods: {
-    formatDate(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('en', options)
     }
   },
   head() {
@@ -140,83 +157,31 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    formatDate(date) {
+      return new Date(date).toLocaleDateString('en-AU', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .blog-grid {
   display: grid;
   grid-template-columns: 1fr;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .blog-grid {
-    grid-template-columns: 1fr 18rem;
+    grid-template-columns: 1fr 16rem;
   }
 }
 
 .list-square {
   list-style-type: square;
-}
-.reduced-font {
-  font-size: 0.9rem;
-}
-
-.nuxt-content-highlight {
-  @apply relative;
-}
-.nuxt-content-highlight .filename {
-  @apply absolute right-0 text-gray-600 font-light z-10 mr-2 mt-1 text-sm;
-}
-.nuxt-content-highlight pre {
-  border-radius: 0 !important;
-}
-.nuxt-content > * {
-  @apply mb-4;
-}
-.nuxt-content h1,
-.nuxt-content h2,
-.nuxt-content h3,
-.nuxt-content h4,
-.nuxt-content h5,
-.nuxt-content h6 {
-  @apply font-mono font-bold overflow-x-scroll;
-}
-.nuxt-content h1 {
-  font-size: 34px;
-}
-.nuxt-content h2 {
-  font-size: 28px;
-}
-.nuxt-content h3 {
-  font-size: 22px;
-}
-.nuxt-content p {
-  @apply mb-4;
-}
-.nuxt-content code {
-  @apply font-semibold;
-}
-.nuxt-content blockquote {
-  @apply pl-4 py-2 border-l-4 border-gray-600;
-}
-.nuxt-content blockquote p {
-  @apply italic m-0;
-}
-.nuxt-content a:hover {
-  text-decoration: underline;
-}
-.nuxt-content ol {
-  @apply list-inside list-decimal;
-}
-.nuxt-content ul {
-  list-style-type: square;
-  @apply list-inside;
-}
-.nuxt-content-editor {
-  @apply bg-gray-100;
-}
-.dark-mode .nuxt-content-editor {
-  @apply bg-gray-900;
 }
 </style>
