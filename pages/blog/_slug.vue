@@ -86,6 +86,7 @@
 
 <script>
 export default {
+  scrollToTop: true,
   async asyncData({ $content, params }) {
     const article = await $content(decodeURIComponent(params.slug)).fetch()
 

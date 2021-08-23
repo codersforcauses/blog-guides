@@ -43,6 +43,7 @@
 
 <script>
 export default {
+  scrollToTop: true,
   async asyncData({ $content, params }) {
     const articles = await $content()
       .where({
