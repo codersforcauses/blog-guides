@@ -54,10 +54,10 @@ body {
 
   .nuxt-content-highlight {
     max-width: calc(100vw - 1.5rem);
-    @apply relative overflow-x-auto text-sm rounded-none;
+    @apply text-sm rounded-none;
   }
   .nuxt-content-highlight .highlight {
-    @apply absolute w-full mt-8 overflow-x-auto;
+    @apply absolute w-full mt-8 overflow-x-auto select-none;
   }
   .nuxt-content-highlight .highlight-line {
     @apply border-l-2 border-accent bg-accent bg-opacity-10 dark:bg-accent dark:bg-opacity-5;

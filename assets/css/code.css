@@ -1,7 +1,13 @@
-pre code.hljs {
+pre.hljs {
+  position: relative;
+}
+.hljs code {
   display: block;
   overflow-x: auto;
-  padding: 2rem 1rem 1rem;
+  padding: 2rem 0 1rem;
+  margin: 1rem;
+  position: relative;
+  z-index: 10;
 }
 .hljs {
   color: #24292e;

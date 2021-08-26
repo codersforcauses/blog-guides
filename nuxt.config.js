@@ -129,9 +129,9 @@ export default {
         const filename = fileName
           ? `<span class="filename">${fileName}</span>`
           : `<span class="lang">${lang}</span>`
-        const code = `<code class="hljs ${lang}">${highlightedCode}</code>`
+        const code = `<code class="${lang}">${highlightedCode}</code>`
 
-        return `<pre>${div}${filename}${code}</pre>`
+        return `<pre class="hljs">${div}${filename}${code}</pre>`
       }
     },
     nestedProperties: ['author.name']
