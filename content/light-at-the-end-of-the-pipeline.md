@@ -19,12 +19,12 @@ author:
 I started learning web development during my 6th grade of primary school in roughly the year of 2012. It was all just basic HTML, not even JavaScript or CSS. I found it kind of boring because it was all basic and the website that can be done just by pure HTML is quite limited. In the final project of that year, I was supposed to create a multi-page linking website with family pictures and things. Because of the fact that I found HTML quite boring, I decided to do the entire project in Microsoft Word. Yes!! Microsoft Word, there's actually a feature call "Save Document as HTML" which means that as long as I can create a "pretty"-looking word document, the website looks better than just doing it normally in HTML. Looking back at it, the HTML generated had like thousands of lines of code. I can't remember why there's so many (i was probably too young to understand it either).
 
 The website that I made kind of look like these:
-<img src="https://www.uwpgroup.co.uk/wp-content/uploads/2014/04/accept_jesus_forever.png" alt="bad_looking_website" style="max-height:500px; margin: auto"/>
+<img src="https://www.uwpgroup.co.uk/wp-content/uploads/2014/04/accept_jesus_forever.png" alt="bad_looking_website" style="max-height:500px; margin: 1rem auto"/>
 
 
 To be fair, it looked very colorful! (as a young kid, the more colors, the better!). It looked better than this though, a website with no css.
 
-<img src="https://images.saymedia-content.com/.image/t_share/MTc0NjQ2NjgwMzU5MjE2OTEx/basic-web-design-with-html-css.png" alt="no_css_website" style="max-height:500px; margin: auto"/>
+<img src="https://images.saymedia-content.com/.image/t_share/MTc0NjQ2NjgwMzU5MjE2OTEx/basic-web-design-with-html-css.png" alt="no_css_website" style="max-height:500px; margin: 1rem auto"/>
 
 
 ### 2015: First time programming in C++ with a Pessimistic Mindset
@@ -65,7 +65,7 @@ Fast forward, migrated to Australia and settled down. I joined halfway of the sc
 
 What made catching up even harder was that Swift is a MacOS-specific thing (i have a windows computer), which means I can only learn that during class time (3 hours per week). Eventually I gave up, I could not replicate the tutorials that I was following, Swift was buggy as hell for me. I write code that seems logical, but doesn't work. I tried explaining and asking for help... Also didn't work. This was one of those times as a young kid where I think "is this my limit?". Look at all my peers here, creating cool mobile apps, and here I am... all I can do are command-line apps and bad-looking websites. I accepted defeat, instead of trying hard to learn Swift, I'll try to lift my weight in the group work by actually creating something. One of the things they still haven't done is the "sudoku solving algorithm". I ended up trying to do this at home. Within a couple of hours for a few days attempting my own as well as searching stackoverflow posts, I was able to create that algorithm. I presented it with my group mates, and we started translating what I've written from C++ to Swift. See below to what it looked like:
 
-<img src="/content/sudoku.png" alt="sudoku_solver" style="max-height:500px; margin: auto"/>
+<img src="/content/sudoku.png" alt="sudoku_solver" style="max-height:500px; margin: 1rem auto"/>
 
 This command line essentially can do 2 things:
 
@@ -80,35 +80,118 @@ Fast forward, the teachers were impressed what we did collectively as a group. T
 #### The nightmare with UI/UX and loss of motivation
 Now, here's where I was a little bit frustrated again! JS was fairly minimal in the project that we have to do. If we have to do JS, it was mainly because we have to apply CSS. That is all! CSS, for the love of god, is what annoyed me the most! You see, I tried very hard to learn CSS in w3school, I got to the point where I know the syntax and many of the fields in there. However, CSS just doesn't click on me! I think it's because of two reasons: the first reason I was not artistic enough to create a "good-looking" website - like I know a good website when I see one, but to create it is something different. The second reason, even if I am trying to copy the looks of another website, I was not good enough with CSS to replicate it. To give you some examples where I struggled with is positioning. I know margin, width, length and sorts of those things, but I just had a hard time piecing all these together. If you look back at my old codes, you will see all sorts of hacky things like negative margin 😅.
 
-Okay, now let's talk about a scenario that frustrates me the most! Now imagine this, I spend many hours trying to make the website look good! All the CSS hacks that I put there finally works! When it was finally time to show it to show one, I say "open this website at this link". When they go look at it, it looks sh*t. Like legit sh*t (because they have different screen size). This is somewhat embarassing for me especially because I had a reputation of making things look good with MS Powerpoint, MS Word, video and image editors.
+Okay, now let's talk about a scenario that frustrates me the most! Now imagine this, I spend many hours trying to make the website look good! All the CSS hacks that I put there finally works! When it was finally time to show it to show one, I say "open this website at this link". When they go look at it, it looks sh*t. Like legit sh*t (because they have different screen size).
 
 Here's an example, here is what it looks like in desktop. Looks fine right?
-<img src="/content/login-desktop.png" alt="desktop-login" style="max-height:500px; margin: auto"/>
+<img src="/content/login-desktop.png" alt="desktop-login" style="max-height:500px; margin: 1rem auto"/>
 
 Now let's take a look at what it looks like in mobile. As you can see, it looks like sh*t. Now you get what I mean when I can use CSS to make it look good, but not universally in all screen sizes.
-<img src="/content/login-mobile.png" alt="desktop-login" style="max-height:500px; margin: auto"/>
+<img src="/content/login-mobile.png" alt="desktop-login" style="max-height:500px; margin: 1rem auto"/>
 
 This is somewhat embarassing for me especially because I had a reputation of making things look good with MS Powerpoint, MS Word, video and image editors.. I guess in some extent, this is where my self-confidence got destroyed so much. It also didn't help that I didn't have support from people who are close to me. I will always get remarks like "how is that useful?", "you can do that in MS Excel", "yeah I can do that in just a few clicks in WordPress" and so on. There was one person, although I am not close with, he really kept my motivation in programming and creating things like this in general. It was my teacher for 2 years in Computer Science (11th and 12 grade of high school). He's a legend! He's a very laid back teacher, but what I like about him is that he really hypes up everything we do! and I can tell you, the very first thing I needed during those times are a spark of motivation to create something cool! He was the only person that very much appreciated bad-looking functional websites.
 
-### A Failed Deployment
+#### A Failed Deployment
 
 Fast forward, this project became an extracurricular of mine from 11th grade and 12th grade in high school. As a group, we were able to create something that functions and works (with a user interface that you can use on a standard laptop or desktop screen), however when it comes to production deployment, the people in IT did not know how to deploy this web service in the network. Furthermore, there was also some struggles with the integration with the school's student database. In other words, they do not want to hand us a direct link to get student information which is perfectly understandable! We only really needed "student enrollment" and "student names" in the school but the system can only give a batch of information including private information  of all the students in the school. Sadly, this project never got deployed.
 
-### 2017-2018: Quit Web Development
-I took a break from web development. 
+### 2017-2018: Quit Web Development and Allocating the time somewhere else
+Aside from that one project alone, I never touched web dev in other place. I lost interest in it, it was too hard to create something cool.
 
-### 2018-2019: First time being on the job to create websites and doing things with WordPress
+#### Desktop Applications
+Instead of doing personal project, I just straight up decided to do standard high school stuff. I still kept my curiosity such as a Year 11 Project where we are tasked to do a cashier system with VB.net (drag and drop GUI and add events on certain things like type and click). I went beyond the project simply with my curiosity... I was curious if it is possible to integrate Microsoft Access with it, and to generate buttons based on the data in the database. I found a youtube video that shows exactly what I wanted to do. Here's what Cafe Au Lait Ordering System looked like! (I was working at McDonald's at the time, and I replicated the interface). There's more pictures if you want, just look [here](https://github.com/frinzekt/Cafe-au-lait-Ordering-System). 
 
-### 2019: Meeting the Coders for Causes
+<img src="/content/cafe-au-lait.png" alt="cafe-au-lait" style="max-height:500px; margin: 1rem auto"/>
+
+I enjoyed doing this project! Unlike web dev, I have drag and drop tools that makes it very easy to create interface! And yes! The cool teacher that I mentioned earlier, he's my teacher at this time.
+
+#### Pissing off a teacher by making him read more code
+The cool teacher I mentioned had to go on temporary leave. He was replaced by a teacher that enforces structure very much and everything rigid. He got rid of VB.net in the curriculum, so no more pretty looking GUI . I had to learn Python as part of the new curriculum he proposed. Also, the 6 week allocated project for the Cafe Au Lait Payroll System got smooshed to a 2 week project.
+
+I did not like his teaching style at all! It killed my creativity! When the payroll system project came along, I violated almost every single thing in the project specification such as:
+
+- should save things on CSV . I made it interface with Microsoft Access and just do csv for reporting but no storage
+- should only be in 1 file. I created many files for it.
+- should not need to install anything. I made the app need all sorts of libraries and Microsoft Access
+
+I spent a lot of time doing this project. It was all worth it in the end, because he said to me after he marked it "That was pretty impressive! But don't you ever do that again! It was very hard to mark that. I can't handle every student submitting me 1000 lines of code each". I got 98% as a mark in the end which is not bad at all considering the fact that I just wanted him to spend more time on it.
+
+If you're curious where the code is, look [here](https://github.com/frinzekt/Cafe-Au-Latte-Payroll-System). Tbh, it's just a huge mess of stackoverflow copy pasting 😂😂😂.
+
+### 2018-2019: First time being on the job to create websites
+
+I eventually graduated in high school and was working for McDonald's at the time. I became comfortable with programming so I accepted an offer at UWA on a course about software engineering and data science.
+
+Also, A friend of mine said that I should work for her brother on websites. So yeah started working for a Digital Agency creating websites. I thought it was a good opportunity because it somewhat aligns to what I will be studying. I am given the freedom to create using anything and was given a CPanel (a place to publish websites all in 1 place). Again, I felt the same frustration with the usual coding of websites (CSS in particular) so I reserved these types of projects. I learned a new tool - WordPress where I can build good-looking websites in just a bliss with a template. I can even use some HTML, CSS and PHP when I needed to. It worked well, but overtime it became very difficult to do certain things like the PHP + MySQL thing I learned.
+
+I eventually gave up this job (Dec 2018 - Jun 2019) because I was getting overwhelmed with trying to balance this work, my work in McDonalds, volunteering at uni (let's talk about this in a second), and my own studies.
+
+[more content here...]
+
+### 2019: A slap in the face from my mentor in the Coders for Causes
+During a networking event, it was about "We'll handle the BS (Business Side) - Software Edition", I met David Yu (the brilliant guy who also has blog entries here)
+
+[more content here ...]
+
+#### Intense Training
+
+Here's a bunch of things I learned over my training:
+
+1. Basics of the web (filling up knowledge gaps)
+   1. HTML
+   2. CSS
+   3. JavaScript
+      1. Asynchronous Programming
+      2. ES6 and functional programming
+2. Frontend Development
+   1. React
+   2. Bootstrap
+   3. Material UI
+   4. Materialize
+   5. Webpack and Babel
+   6. Embedded JavaScript
+   7. Figma
+3. Backend Development
+   1. MongoDB + (NoSQL vs SQL databases)
+   2. NodeJS + ExpressJS
+   3. Firebase
+4. Full-Stack Development
+   1. Integrating entire backend with frontend (MERN - MongoDB, Express, React, Node)
+5. Developer Workflow
+   1. Linux Systems
+   2. Package managers
+   3. VS Code (Yes!!! Highly recommend to become an expert with hotkeys)
+   4. Postman
+   5. Git CLI, Github, Github desktop and Gitkraken
+6. Data Science
+   1. Excel
+   2. Tableau (with Python Integration)
+   3. Jupyter Notebooks
+   4. Python (I was filling up my knowledge gaps)
+7. Cybersecurity
+   1. Kali Linux
+   2. Web Vulnerabilities (eg. CORS, XSS, SQL Injection, etc.)
+8. Others
+   1. Robotics Process Automation with UIPath
+   2. Google Calendar
+
+When I mean intense training, I did not have a social life nor free time. Every single moment and minute of my life for ~1.5 year is about learning these things primarily from LinkedIn Learning (UWA was paying for my subscription). Coding and watching tutorial became the time filler after work, after uni, I did not have hobbies (my previous hobbies was gaming, but I once hit 1000+ hours (~42 days) in just 1 game, and felt guilty ever since touching games). It was not easy! 
+
+### 2020-2021: Putting all that training into practice
+
+### 2021: The Present
 
 
-### Why is the title of this blog "Light at the end of the pipeline"
+# Retrospective
+Looking back at everything I wrote here, there's a few things that can be seen.
+
+- Emotion and motivation go hand-in-hand together and are powerful force in achieving things. You will see that throughout the entire journey, my passion to always do cool things are powered due to my feelings: jealousy (being around people that can do cooler things so i try to do cool things too), frustation (not being able to do something I wanted to do, so give up and put the effort somewhere else), happiness (showing people cool things and making them happy, so I become happy too), fear (reaching "my limits")
+
+[more content here...]
+
+# Why is the title of this blog "Light at the end of the pipeline"
 Firstly, let me tell you briefly what CI (Continuous Integration) pipelines are - they are essentially a place where automations are ran for automated software testing. They are very time consuming to develop but they are very valuable in maintaining software. When I mean time consuming, I mean that for every attempt that you make, you have to wait for the automation to finish to know whether it worked properly.
 
-When I told one of my co-workers about the blog that I am writing, I said I'll probably name it "I hated web dev, but now I am loving it!". He said to name it after one of your biggest accomplishments here (Cloud-based )
+When I told one of my co-workers about the blog that I am writing, I said I'll probably name it "I hated web dev, but now I am loving it!". He said to name it after one of my biggest accomplishments in the workplace - integration testing in Cloud (Bitbucket pipelines) on a 10-year-old Python2 codebase that is traditionally done on-premise. So it is a bit of a play on words from the cliche title "Light at the end of the tunnel".
 
-## Why I hated web development?
-
-## A slap in the face from my mentor from the Coders for Causes
-
-## The start of 
+# Remarks
+I hope you enjoyed reading this blog! Hopefully, I have been able to motivate you to do something different to other people and to be open-minded. You never knew what you could do with your life.
