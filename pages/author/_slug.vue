@@ -51,8 +51,8 @@ export default {
           $regex: [decodeURIComponent(params.slug), 'i']
         }
       })
-      .without(['body', 'toc', 'dir', 'updatedAt', 'createdAt'])
-      .sortBy('createdAt', 'desc')
+      .without(['body', 'toc', 'dir', 'updatedAt'])
+      .sortBy('updatedAt', 'desc')
       .fetch()
 
     const names = articles[0].author.name.split(' ')
