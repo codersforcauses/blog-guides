@@ -90,7 +90,7 @@ Now let's take a look at what it looks like in mobile. As you can see, it looks 
 
 This is somewhat embarassing for me especially because I had a reputation of making things look good with MS Powerpoint, MS Word, video and image editors.. I guess in some extent, this is where my self-confidence got destroyed so much. It also didn't help that I didn't have support from people who are close to me. I will always get remarks like "how is that useful?", "you can do that in MS Excel", "yeah I can do that in just a few clicks in WordPress" and so on. There was one person, although I am not close with, he really kept my motivation in programming and creating things like this in general. It was my teacher for 2 years in Computer Science (11th and 12 grade of high school). He's a legend! He's a very laid back teacher, but what I like about him is that he really hypes up everything we do! and I can tell you, the very first thing I needed during those times are a spark of motivation to create something cool! He was the only person that very much appreciated bad-looking functional websites.
 
-### A Failed Production Deployment
+### A Failed Deployment
 
 Fast forward, this project became an extracurricular of mine from 11th grade and 12th grade in high school. As a group, we were able to create something that functions and works (with a user interface that you can use on a standard laptop or desktop screen), however when it comes to production deployment, the people in IT did not know how to deploy this web service in the network. Furthermore, there was also some struggles with the integration with the school's student database. In other words, they do not want to hand us a direct link to get student information which is perfectly understandable! We only really needed "student enrollment" and "student names" in the school but the system can only give a batch of information including private information  of all the students in the school. Sadly, this project never got deployed.
 
@@ -101,6 +101,11 @@ I took a break from web development.
 
 ### 2019: Meeting the Coders for Causes
 
+
+### Why is the title of this blog "Light at the end of the pipeline"
+Firstly, let me tell you briefly what CI (Continuous Integration) pipelines are - they are essentially a place where automations are ran for automated software testing. They are very time consuming to develop but they are very valuable in maintaining software. When I mean time consuming, I mean that for every attempt that you make, you have to wait for the automation to finish to know whether it worked properly.
+
+When I told one of my co-workers about the blog that I am writing, I said I'll probably name it "I hated web dev, but now I am loving it!". He said to name it after one of your biggest accomplishments here (Cloud-based )
 
 ## Why I hated web development?
 
