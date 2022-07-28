@@ -66,7 +66,7 @@ export default {
       this.showOptions = true
       this.articles = await this.$content()
         .only(['title', 'slug'])
-        .sortBy('createdAt', 'asc')
+        .sortBy('updatedAt', 'asc')
         .limit(6)
         .search(val)
         .fetch()
